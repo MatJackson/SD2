@@ -15,3 +15,6 @@ Provide a platform through which a user can ask questions to a community of like
 
 ## Technologies
   * Bootstrap v3.3.7
+  * Node.js v8.9.4LTS
+  * Express v4.16.0
+  * MongoDB v3.6
