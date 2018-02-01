@@ -20,3 +20,7 @@ The site will provide users with the ability to search, post and reply to questi
   * Express v4.16.0
   * MongoDB v3.6
   * Mongoose v5.0.2
+  
+## References
+* Template for home page: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_social&stacked=h
+* Modal for login: w3School website
