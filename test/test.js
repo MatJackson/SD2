@@ -3,8 +3,6 @@ var request = require("request"),
     sd2 = require("../app.js"),
     base_url = "http://localhost:3000/";
 
-var base_url = "http://localhost:3000/"
-
 describe("SD2 Test", function() {
   describe("GET /", function() {
     it("returns status code 200", function() {
