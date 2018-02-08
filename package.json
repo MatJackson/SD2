@@ -17,10 +17,21 @@
   },
   "homepage": "https://github.com/MatJackson/SD2#readme",
   "dependencies": {
+    "bcryptjs": "*",
     "body-parser": "^1.18.2",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "request": "^2.83.0",
-    "mocha": "3.4.2"
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "^4.3.0",
+    "mocha": "3.4.2",
+    "mongodb": "*",
+    "mongoose": "^5.0.3",
+    "passport": "^0.4.0",
+    "passport-http": "*",
+    "passport-local": "*",
+    "request": "^2.83.0"
   }
 }
