@@ -1,1 +1,13 @@
 body { padding-top: 70px; }
+textarea { 
+    height: 250px;
+    width: 100%;
+    top: 7.5px;
+    bottom: 7.5px;
+    border-radius: 5px;
+    resize: none; }
+.submit-btn {
+    position: absolute;
+    bottom: 7.5px;
+    top: 7.5px;
+}
