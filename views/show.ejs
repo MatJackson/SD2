@@ -1,0 +1,23 @@
+<% include ./navbar %>
+<div class="container-fluid">
+    <div> <h4><%=blog.title %></h4>
+        <!-- <div class="ui top attached segment">
+                <img class="ui centered rounded image"src="<%= blog.image %>">
+                <div class="content"> -->
+                        <span><%= blog.created%></span>
+                <!-- </div> -->
+                <!-- <div class="description"> -->
+                        <p><%= blog.body%></p>
+                <!-- </div> -->
+                <a class="btn btn-primary" href="/blogs/<%= blog._id %>/edit">Edit</a>
+                <form id ="delete"action= "/blogs/<%= blog._id %>?_method=DELETE" method="POST" >
+                    <button class="btn btn-primary">Delete</button>
+                </form>
+        </div>
+        
+        
+    
+    </div>
+</div>
+
+<% include ./footer %>
