@@ -20,6 +20,25 @@ var users = require('./routes/users');
 var app = express();
 
 
+//routes requirements
+var commentRoutes = require("./routes/comments"),
+//MODELS requirements
+var Comment = require("./models/comment");
+
+//need to npm install method-override
+var methodOverride = require("method-override");
+
+
+mongoose.connect("mongodb://localhost/Metis");
+/* example of middleware
+var logger = function(req, res, next){
+    console.log('Logging...');
+    next();
+}
+app.use(logger);
+*/
+
+
 
 // View Engine
 app.set('view engine', 'ejs');
@@ -41,6 +60,7 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
+
 
 // Passport Init
 app.use(passport.initialize());
@@ -93,9 +113,15 @@ app.set('port', (process.env.PORT || 3000));
 var Comment = mongoose.model("Comment",commentSchema);
 
 
+app.use(commentRoutes);
+
+
 app.get('/', function(req,res){
     res.render('index');
 });
+
+
+
 
 
 app.listen(3000, function(){
