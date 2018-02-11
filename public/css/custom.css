@@ -6,8 +6,15 @@ textarea {
     bottom: 7.5px;
     border-radius: 5px;
     resize: none; }
-.submit-btn {
-    position: absolute;
-    bottom: 7.5px;
-    top: 7.5px;
+
+.submit-post {
+    top: 30px;
+}
+
+#titlebox {
+    width: 50%;
+}
+
+#title {
+    font-size: 18px;
 }
