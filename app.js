@@ -18,6 +18,7 @@ var users = require('./routes/users');
 
 // Init app
 var app = express();
+var Post = require('./models/posts');
 
 
 //routes requirements
@@ -108,6 +109,8 @@ app.set('port', (process.env.PORT || 3000));
 
 // What's this for? ask Steph -MJ
 
+// set static path
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 var Comment = mongoose.model("Comment",commentSchema);
@@ -126,4 +129,5 @@ app.get('/', function(req,res){
 
 app.listen(3000, function(){
     console.log('server started on port '+app.get('port'));
+
 });
