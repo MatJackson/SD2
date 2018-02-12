@@ -14,6 +14,11 @@ router.get('/', function(req,res){
     res.render('index');
 });
 
+router.get('/error', function(req, res) {
+    res.render('error')
+});
+
+
 /*
 *   Post Question Endpoint
 */
@@ -21,22 +26,27 @@ router.get('/post/:postid/user/:userid/:title', function(req, res) {
 
     // Find post in DB using the id
     Post.findById(req.params.postid, function(err, doc) {
-        if (err) console.error('Not found.') // later change to Error Page
-       
-        /*
-        *   Add conditional statements to verify if post exists
-        */
-
-        // Renders postpage with correct content
-        res.render(
-            'postpage', 
-            {
-                title: req.params.title, 
-                description: doc.description, 
-                userName: doc.author.userName, 
-                timestamp: doc.timePosted
+        if (err) { // if post id is not found
+            console.error('Not found.')
+            res.redirect('/error');
+        } 
+        else {
+            // Conditional statements to verify if post exists
+            if (doc.title != req.params.title || doc.author.id != req.params.userid) {
+                res.redirect('/error');
             }
-        ); 
+    
+            // Renders postpage with correct content
+            res.render(
+                'postpage', 
+                {
+                    title: req.params.title, 
+                    description: doc.description, 
+                    userName: doc.author.userName, 
+                    timestamp: doc.timePosted
+                }
+            ); 
+        }
     });
 });
 
