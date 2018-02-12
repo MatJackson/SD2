@@ -2,17 +2,17 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
+//var modal = require('../public/login');
 var User = require('../models/user');
 
-// Register - assuming register.ejs is created
+// Register
 router.get('/register', function(req, res) {
-    res.render('register');
+    res.render('index');
 });
 
 // Login
 router.get('/login', function(req, res) {
-    res.render('login');
+    res.render('index');
 });
 
 // Register User
@@ -32,7 +32,8 @@ router.post('/register', function(req, res) {
     var errors = req.validationErrors(); // deprecated, find new way
 
     if(errors) {
-        res.render('register', {
+        console.log(errors);
+        res.render('index', {
             errors:errors
         });
     } else {
@@ -49,7 +50,7 @@ router.post('/register', function(req, res) {
 
         req.flash('success_msg', 'You have successfully registered an account');
 
-        res.redirect('/users/login');
+        res.redirect('/')
     }
 });
 
@@ -58,14 +59,18 @@ passport.use(new LocalStrategy(
         User.getUserByUsername(username, function(err, user){
             if(err) throw err;
             if(!user){
+                console.log('Unknown User'); //debugging
                 return done(null, false, {message: 'Unknown User'});
             }
+            console.log('user found'); // debugging
 
             User.comparePassword(password, user.password, function(err, isMatch){
                 if(err) throw err;
                 if(isMatch){
+                    console.log(username + "logged in"); //debugging
                     return done(null, user);
                 } else {
+                    console.log('Invalid password'); //debugging
                     return done(null, false, {message: 'Invalid password'});
                 }
             });
@@ -86,6 +91,7 @@ passport.deserializeUser(function(id, done) {
 router.post('/login',
     passport.authenticate('local', {successRedirect: '/', failureRedirect:'/users/login', failureFlash:true}),
     function(req, res) {
+    console.log('authenticate called'); // debugging
         res.redirect('/');
     }
 );
