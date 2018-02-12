@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-Parser');
 var mongoose = require('mongoose');
 var Post = require('./../models/posts')
 var datetime = require('node-datetime');
