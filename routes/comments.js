@@ -2,14 +2,16 @@ var express = require("express");
 var router = express.Router();
 var Post = require("../models/posts");
 var Comment = require ("../models/comment");
+var datetime = require('node-datetime');
+var bodyParser = require('body-Parser');
 
 //===================
 //COMMENT ROUTES
 //===================
 
 //COMMENTS CREATE ROUTE
-router.post("/post/:id/user/:userid/:title/comments", isLoggedIn, function(req,res){
-	Post.findById(req.params.id,function(err,post){
+router.post("/post/:postid/user/:userid/:title/comments", isLoggedIn, function(req,res){
+	Post.findById(req.params.postid,function(err,post){
 		if(err){
 		console.log(err);
 		//error message for time being
@@ -29,10 +31,13 @@ router.post("/post/:id/user/:userid/:title/comments", isLoggedIn, function(req,r
 					comment.author.id=req.user._id;
 					comment.author.username = req.user.username;
 					comment.timePosted = formattedDate;
+					
 					comment.save();
+					
+
 					post.comments.push(comment._id);
 					post.save();
-					res.redirect("/post/"+post._id+"/user/" + post.author._id +"/"+ post.title);
+					res.redirect("/post/"+post._id+"/user/" + post.author.id +"/"+ post.title);
 				}
 			});
 		}
@@ -43,7 +48,7 @@ function isLoggedIn(req,res,next){
 	if(req.isAuthenticated()){
 		return next();
 	}
-	res.redirect("/login")
+	res.redirect("/");
 }
 
 module.exports = router;

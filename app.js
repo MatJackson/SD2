@@ -10,27 +10,32 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
+// Init app
+var app = express();
+
+//2 following needed for update and destroy routes
+var methodOverride = require("method-override");
+app.use(methodOverride("_method"));
+
+//REQUIRE MODELS
+var Comment = require("./models/comment");
+var Post = require('./models/posts');
+var User = require('./models/user');
+
 mongoose.connect('mongodb://localhost/db2');
 var db = mongoose.connection;
 
+//REQUIRE ROUTES
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
-// Init app
-var app = express();
-var Post = require('./models/posts');
+var commentRoutes = require("./routes/comments");
 
 
-//routes requirements
-var commentRoutes = require("./routes/comments"),
-//MODELS requirements
-var Comment = require("./models/comment");
-
-//need to npm install method-override
-var methodOverride = require("method-override");
+// View Engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 
-mongoose.connect("mongodb://localhost/Metis");
 /* example of middleware
 var logger = function(req, res, next){
     console.log('Logging...');
@@ -40,15 +45,9 @@ app.use(logger);
 */
 
 
-
-// View Engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-
 // BodyParser Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
 
@@ -100,12 +99,10 @@ app.use(function(req, res, next) {
 // Middleware for Route Files
 app.use('/', routes);
 app.use('/users', users);
-
+app.use(commentRoutes);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));
-
-
 
 // What's this for? ask Steph -MJ
 
@@ -113,17 +110,11 @@ app.set('port', (process.env.PORT || 3000));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-var Comment = mongoose.model("Comment",commentSchema);
-
-
-app.use(commentRoutes);
 
 
 app.get('/', function(req,res){
     res.render('index');
 });
-
-
 
 
 
