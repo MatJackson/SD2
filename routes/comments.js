@@ -3,7 +3,6 @@ var router = express.Router();
 var Post = require("../models/posts");
 var Comment = require ("../models/comment");
 var datetime = require('node-datetime');
-var bodyParser = require('body-Parser');
 
 
 //===================
