@@ -30,11 +30,12 @@
     "method-override": "^2.3.10",
     "mocha": "3.4.2",
     "mongodb": "*",
-    "mongoose": "^5.0.3",
+    "mongoose": "^5.0.5",
     "node-datetime": "^2.0.6",
     "passport": "^0.4.0",
     "passport-http": "*",
     "passport-local": "*",
+    "path": "^0.12.7",
     "request": "^2.83.0"
   }
 }
