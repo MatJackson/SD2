@@ -15,7 +15,14 @@ var postSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Comment"
     }],
-    upvotes: Number,
+    like: {
+        type: Number, 
+        default: 0
+    },
+    dislike: {
+        type: Number, 
+        default: 0
+    },
     timePosted: String
 });
 
