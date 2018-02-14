@@ -10,43 +10,24 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
-// Init app
-var app = express();
-
-//2 following needed for update and destroy routes
-var methodOverride = require("method-override");
-app.use(methodOverride("_method"));
-
-//REQUIRE MODELS
-var Comment = require("./models/comment");
-var Post = require('./models/posts');
-var User = require('./models/user');
-
 mongoose.connect('mongodb://localhost/db2');
 var db = mongoose.connection;
 
-//REQUIRE ROUTES
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var commentRoutes = require("./routes/comments");
+
+// Init app
+var app = express();
 
 
 // View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-/* example of middleware
-var logger = function(req, res, next){
-    console.log('Logging...');
-    next();
-}
-app.use(logger);
-*/
-
 
 // BodyParser Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 
@@ -59,7 +40,6 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
-
 
 // Passport Init
 app.use(passport.initialize());
@@ -98,23 +78,16 @@ app.use(function(req, res, next) {
 // Middleware for Route Files
 app.use('/', routes);
 app.use('/users', users);
-app.use(commentRoutes);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));
 
+
 // What's this for? ask Steph -MJ
-
-// set static path
-app.use(express.static(path.join(__dirname, 'public')));
-
-
 app.get('/', function(req,res){
     res.render('index');
 });
 
-
 app.listen(3000, function(){
     console.log('server started on port '+app.get('port'));
-
 });
