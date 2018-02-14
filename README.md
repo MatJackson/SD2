@@ -23,4 +23,4 @@ The site will provide users with the ability to search, post and reply to questi
   
 ## References
 * Template for home page: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_social&stacked=h
-* Modal for login: W3School website
+* Modal for login: w3School website
