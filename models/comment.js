@@ -9,9 +9,14 @@ var commentSchema = mongoose.Schema(
             },
             username: String
         },
-        // @Nath, upvotes and downvotes are present for the time being, feel free to change the model
-        upvotes: Number,
-        downvotes: Number,
+        like: {
+            type: Number, 
+            default: 0
+        },
+        dislike: {
+           type: Number, 
+           default: 0
+        },
         timePosted: String
 
     });

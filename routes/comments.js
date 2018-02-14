@@ -44,6 +44,143 @@ router.post("/post/:postid/user/:userid/:title/comments", isLoggedIn, function(r
 		}
 	});
 });
+
+// router.get("/post/:postid/user/:userid/:title/comments/", isLoggedIn, function(req,res){
+// 	res.render("postpage");
+// });
+
+
+router.get("/post/:postid/user/:userid/:title/comments/like", isLoggedIn, function(req,res){
+	
+	Post.findById(req.params.postid, function(err, post){
+
+		if(err){
+				console.log(err);
+		}else{
+				if(post.like==1){
+					Post.findByIdAndUpdate(req.params.postid, {$inc: {like: -1}} ,function(err, post){
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
+					});
+				}else if(post.like==0 && post.dislike==0){
+					Post.findByIdAndUpdate(req.params.postid, {$inc: {like: 1}} ,function(err, post){
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
+					});
+				}//else {	
+				// 	res.redirect("/blogs"); 
+				// }
+		}
+
+	});
+
+});
+
+router.get("/post/:postid/user/:userid/:title/comments/dislike", isLoggedIn, function(req,res){
+	
+	Post.findById(req.params.postid, function(err, post){
+		
+		if(err){
+				console.log(err);
+		}else{
+				if(post.dislike==1){
+					Post.findByIdAndUpdate(req.params.postid, {$inc: {dislike: -1}} ,function(err, pst){
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
+					});
+				}else if(post.like==0 && post.dislike==0){
+					Post.findByIdAndUpdate(req.params.postid, {$inc: {dislike: 1}} ,function(err, post){
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
+					});
+				}//else {	
+				// 	res.redirect("/blogs"); 
+				// }
+		}
+
+	});
+
+});
+
+
+router.get("/post/:postid/user/:userid/:title/comments/:commentid/like", isLoggedIn, function(req,res){
+	console.log(req.params.commentid);
+	Comment.findById(req.params.commentid, function(err, comment){
+
+		if(err){
+				console.log(err);
+		}else{
+				if(comment.like==1){
+					Comment.findByIdAndUpdate(req.params.commentid, {$inc: {like: -1}} ,function(err, post){
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
+					});
+				}else if(comment.like==0 && comment.dislike==0){
+					Comment.findByIdAndUpdate(req.params.commentid, {$inc: {like: 1}} ,function(err, post){
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
+					});
+				}//else {	
+				// 	res.redirect("/blogs"); 
+				// }
+		}
+
+	});
+
+});
+
+router.get("/post/:postid/user/:userid/:title/comments/:commentid/dislike", isLoggedIn, function(req,res){
+	
+	Comment.findById(req.params.commentid, function(err, comment){
+		
+		if(err){
+				console.log(err);
+		}else{
+				if(comment.dislike==1){
+					Comment.findByIdAndUpdate(req.params.commentid, {$inc: {dislike: -1}} ,function(err, pst){
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
+					});
+				}else if(comment.like==0 && comment.dislike==0){
+					Comment.findByIdAndUpdate(req.params.commentid, {$inc: {dislike: 1}} ,function(err, post){
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
+					});
+				}//else {	
+				// 	res.redirect("/blogs"); 
+				// }
+		}
+
+	});
+	
+});
+
+
+
 //MIDDLE WARE
 function isLoggedIn(req,res,next){
 	if(req.isAuthenticated()){
