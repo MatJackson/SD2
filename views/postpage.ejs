@@ -11,6 +11,7 @@
 
   <link rel="stylesheet" type="text/css" href="/css/login.css">
   <link rel="stylesheet" type="text/css" href="/css/postpage.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
   <script src="login.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,6 +24,10 @@
       color: white;
       padding: 15px;
     }
+
+    .container{
+  margin-top: 7.0em;
+}
   </style>
 </head>
 
@@ -54,7 +59,23 @@
                         <p id="timestamp" class="pull-right"> Posted on <%= post.timePosted %> </p>
                     </form>
                 
+                    <div class="ui labeled button" tabindex="0">
+                      <div class="ui green button">
+                        <i class="thumbs up icon"></i> Like
+                      </div>
+                      <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/like" class="ui basic green left pointing label">
+                        <%= post.like %>
+                      </a>
                     </div>
+                    <div class="ui labeled button" tabindex="0">
+                      <div class="ui red button">
+                        <i class="thumbs down icon"></i> Dislike
+                      </div>
+                      <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/dislike" class="ui basic red left pointing label">
+                        <%= post.dislike %>
+                      </a>
+                    </div>
+                  </div>
               </div>
             </div>
 
@@ -71,6 +92,25 @@
                             <span class="pull-right"><%= comment.timePosted %></span>
                             <p id="comments"><%= comment.text %></p>
                             <hr>
+
+                            <span class="pull-left">
+                              <div class="ui labeled button" tabindex="0">
+                                <div class="ui green button">
+                                  <i class="thumbs up icon"></i> Like
+                                </div>
+                                <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
+                                  <%= comment.like %>
+                                </a>
+                              </div>
+                              <div class="ui labeled button" tabindex="0">
+                                <div class="ui red button">
+                                  <i class="thumbs down icon"></i> Dislike
+                                </div>
+                                <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
+                                  <%= comment.dislike %>
+                                </a>
+                              </div>
+                            </span>
                     </div>
                 </div>
                 
