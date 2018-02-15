@@ -4,7 +4,9 @@ var path = require('path');
 var routes = require('./routes/index');
 var app = express();
 var Post = require('./models/posts');
+var mongoose = require('mongoose');
 
+mongoose.connect('mongodb://localhost/testdb');
 /* example of middleware
 var logger = function(req, res, next){
     console.log('Logging...');
