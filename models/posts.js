@@ -15,7 +15,7 @@ var postSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Comment"
     }],
-    like: {
+   like: {
         type: Number, 
         default: 0
     },
@@ -25,5 +25,6 @@ var postSchema = mongoose.Schema({
     },
     timePosted: String
 });
+
 
 module.exports = mongoose.model('Post', postSchema);;
