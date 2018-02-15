@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <title>Metis</title>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/css/custom.css">
-
-  <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
   <link rel="stylesheet" type="text/css" href="/css/postpage.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
   <script src="login.js"></script>
@@ -24,10 +21,10 @@
       color: white;
       padding: 15px;
     }
-
-    .container{
+	 .container{
   margin-top: 7.0em;
 }
+	
   </style>
 </head>
 
@@ -37,19 +34,15 @@
 
 <% include login %>
   
-
 <div class="container">    
-
-  
-
   <div class="row"> 
     <!-- <% include leftsidebar %> -->
     <div class="col-sm-10"> 
         <div class="row">
             <div class="col-sm-12">
               <div class="panel panel-default text-left">
-
-                  <div class="panel-body">
+                <div class="panel-body">
+                
                       <p id="title" contenteditable="false"><%= post.author.username %> asks: <%= post.title %></p>
                       
                       <p id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><%= post.description %></p>
@@ -134,15 +127,13 @@
 
                
                 
-                
-                
-            </div>
-
+            
+          </div>
     </div>
     <div class="col-sm-2 well"> 
 
       <% include rightsidebar %>
-      
+
     </div>
   </div>
 </div>
@@ -153,3 +144,8 @@
 
 
 </html>
+
+
+
+  
+  
