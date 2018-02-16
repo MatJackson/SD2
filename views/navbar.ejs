@@ -26,7 +26,11 @@
             </form>
             <ul class="nav navbar-nav navbar-right">S
               <!-- <li><a href="#"><id ="login"></id><span class="glyphicon glyphicon-user"></span> Login</id></a></li> -->
-              <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+                <% if(!user){ %>
+                  <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span>Login</a></li>
+                <% } else{ %>
+                  <li><a href="/users/logout"><span class="glyphicon glyphicon-user"></span>Logout</a></li>
+                <% } %>
             </ul>
           </div>
         </div>
