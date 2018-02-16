@@ -11,7 +11,7 @@
           </div>
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="../">Home</a></li>
+              <li class="active"><a href="/">Home</a></li>
               <li><a href="#">Messages</a></li>
               <!-- added following line testing -->
 
@@ -30,7 +30,12 @@
             </form>
             <ul class="nav navbar-nav navbar-right">S
               <!-- <li><a href="#"><id ="login"></id><span class="glyphicon glyphicon-user"></span> Login</id></a></li> -->
-              <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+                <% if(!user){ %>
+                  <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <% } else{ %>
+                  <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span> <%= user.username %></a></li>
+                  <li><a href="/users/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <% } %>
             </ul>
           </div>
         </div>
