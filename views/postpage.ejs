@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>Metis</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/custom.css">
+
+  <link rel="stylesheet" type="text/css" href="/css/login.css">
+  <link rel="stylesheet" type="text/css" href="/css/postpage.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
+  <script src="login.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <style>    
+    /* Set black background color, white text and some padding */
+
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    .container{
+  margin-top: 7.0em;
+}
+  </style>
+</head>
+
+<body>
+
+<% include navbar %>
+
+<% include login %>
+  
+
+<div class="container">    
+
+  
+
+  <div class="row"> 
+    <!-- <% include leftsidebar %> -->
+    <div class="col-sm-10"> 
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default text-left">
+
+                  <div class="panel-body">
+                      <p id="title" contenteditable="false"><%= post.author.username %> asks: <%= post.title %></p>
+                      
+                      <p id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><%= post.description %></p>
+                      <a class="btn btn-xs btn-warning" href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/edit">Edit</a>
+                    <form id="delete-form" action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Delete</button>
+                        <p id="timestamp" class="pull-right"> Posted on <%= post.timePosted %> </p>
+                    </form>
+                
+                    <div class="ui labeled button" tabindex="0">
+                      <div class="ui green button">
+                        <i class="thumbs up icon"></i> Like
+                      </div>
+                      <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/like" class="ui basic green left pointing label">
+                        <%= post.like %>
+                      </a>
+                    </div>
+                    <div class="ui labeled button" tabindex="0">
+                      <div class="ui red button">
+                        <i class="thumbs down icon"></i> Dislike
+                      </div>
+                      <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/dislike" class="ui basic red left pointing label">
+                        <%= post.dislike %>
+                      </a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+            
+
+
+          </div>
+          <div class="well">
+
+              <% post.comments.forEach(function(comment){ %>
+                <div class="row">
+                    <div class="col-md-12">
+                            <p><strong><%= comment.author.username %></strong></p>
+                            <span class="pull-right"><%= comment.timePosted %></span>
+                            <p id="comments"><%= comment.text %></p>
+                            <hr>
+
+                            <span class="pull-left">
+                              <div class="ui labeled button" tabindex="0">
+                                <div class="ui green button">
+                                  <i class="thumbs up icon"></i> Like
+                                </div>
+                                <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
+                                  <%= comment.like %>
+                                </a>
+                              </div>
+                              <div class="ui labeled button" tabindex="0">
+                                <div class="ui red button">
+                                  <i class="thumbs down icon"></i> Dislike
+                                </div>
+                                <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
+                                  <%= comment.dislike %>
+                                </a>
+                              </div>
+                            </span>
+                    </div>
+                </div>
+                
+            <% }) %>
+           
+                    <h6 id="commentSection">Add New Comment to <strong><%= post.title %></strong> </h6>
+                   
+                    <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
+                        <div class="form-group">
+                            
+                            <textarea name="comment[text]" placeholder="Type Here"></textarea>
+
+
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-default btn-block">Submit! </button>
+                        </div>
+                    </form>
+                
+
+               
+                
+                
+                
+            </div>
+
+    </div>
+    <div class="col-sm-2 well"> 
+
+      <% include rightsidebar %>
+      
+    </div>
+  </div>
+</div>
+
+<% include footer %>
+
+</body>
+
+
+</html>
