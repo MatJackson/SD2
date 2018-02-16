@@ -53,9 +53,9 @@ function loginAjax(){
 
 function shakeModal(){
     $('#loginModal .modal-dialog').addClass('shake');
-             $('.error').addClass('alert alert-danger').html("Invalid login/password combination");
+             //$('.error').addClass('alert alert-danger').html("Invalid login/password combination");
              //$('input[type="password"]').val('');
-             setTimeout( function(){ 
-                $('#loginModal .modal-dialog').removeClass('shake'); 
-    }, 1000 ); 
+    //          setTimeout( function(){
+    //             $('#loginModal .modal-dialog').removeClass('shake');
+    // }, 1000 );
 }

@@ -32,10 +32,11 @@ router.post('/register', function(req, res) {
     var errors = req.validationErrors(); // deprecated, find new way
 
     if(errors) {
+        //shakeModal();
         console.log(errors);
-        res.render('index', {
-            errors:errors
-        });
+        // res.render('index', {
+        //     errors:errors
+        // });
     } else {
         var newUser = new User({
             username: username,
@@ -88,8 +89,17 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+
+// // Rewriting Login
+// router.post('/login', function(req, res) {
+//     var username = req.body.username;
+//     var password = req.body.password
+//
+// });
+
+
 router.post('/login',
-    passport.authenticate('local', {successRedirect: '/', failureRedirect:'/users/login', failureFlash:true}),
+    passport.authenticate('local', {successRedirect: '/', failureFlash:true}),
     function(req, res) {
     console.log('authenticate called'); // debugging
         res.redirect('/');
@@ -101,7 +111,7 @@ router.get('/logout', function(req, res){
 
     req.flash('success_msg', 'You are logged out');
 
-    res.redirect('/users/login');
+    res.redirect('/');
 });
 
 module.exports = router;
