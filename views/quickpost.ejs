@@ -2,14 +2,21 @@
     <div class="col-sm-12">
       <div class="panel panel-default text-left">
         <div class="panel-body">
-          <button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#entrypost">
-            <span></span> Quick Post
+          <button type="button" class="btn btn-default btn-sm" data-toggle="collapse" data-target="#entrypost">Quick Post
+            <span></span>
           </button> <!-- Missing user validation -->
           <div class="collapse" id="entrypost">
             <form action="/post" method="POST">
-              <input id="titlebox" type="text" placeholder="Question...Title... " name="title">
-              <textarea class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" placeholder="Enter description..." name="description"></textarea>
-              <button type="submit" value="submit" class="submit-post btn-sm">Submit</button>
+             
+              <div class="form-group">
+                <label>Title</label>
+                <input class="form-control input-lg" id="titlebox" type="text" placeholder="Question Title " name="title">
+              </div>
+              <div>
+                <label for="questionDescription">Description</label>
+                <textarea style="margin:5px;" class="form-control input-lg" rows="5" placeholder="Enter description..." name="description"></textarea>
+              </div>
+              <button style="float:right;" type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
             </form>
           </div>
         </div>
