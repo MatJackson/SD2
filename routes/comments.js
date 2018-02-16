@@ -58,11 +58,11 @@ router.get("/post/:postid/user/:userid/:title/comments/like", isLoggedIn, functi
 		}else{
 				if(post.like==1){
 					Post.findByIdAndUpdate(req.params.postid, {$inc: {like: -1}} ,function(err, post){
-						// if(err){
-						// 	res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
-						// }else{
-						// 	res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
-						// }
+						if(err){
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}else{
+							res.redirect("/post/"+req.params.postid+"/user/" + req.params.userid +"/"+ req.params.title);
+						}
 					});
 				}else if(post.like==0 && post.dislike==0){
 					Post.findByIdAndUpdate(req.params.postid, {$inc: {like: 1}} ,function(err, post){
