@@ -15,6 +15,37 @@ router.get('/login', function(req, res) {
     res.render('index');
 });
 
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.getUserById(id, function(err, user) {
+        done(err, user);
+    });
+});
+
+// Passport Configuration
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        User.getUserByUsername(username, function(err, user){
+            if(err) throw err;
+            if(!user){
+                return done(null, false, {message: 'Unknown User'});
+            }
+
+            User.comparePassword(password, user.password, function(err, isMatch){
+                if(err) throw err;
+                if(isMatch){
+                    return done(null, user);
+                } else {
+                    return done(null, false, {message: 'Invalid password'});
+                }
+            });
+        });
+    })
+);
+
 // Register User
 router.post('/register', function(req, res) {
     var username = req.body.username;
@@ -33,7 +64,6 @@ router.post('/register', function(req, res) {
 
     if(errors) {
         //shakeModal();
-        console.log(errors);
         // res.render('index', {
         //     errors:errors
         // });
@@ -46,62 +76,22 @@ router.post('/register', function(req, res) {
 
         User.createUser(newUser, function(err, user) {
             if (err) throw err;
-            console.log(user);
+            console.log(user.username + " created");
         });
 
         req.flash('success_msg', 'You have successfully registered an account');
 
-        res.redirect('/')
+        // Logs in user after successfull registration
+        req.login(newUser, function(err){
+            if (err) throw err;
+            res.redirect('/');
+        })
     }
 });
-
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.getUserByUsername(username, function(err, user){
-            if(err) throw err;
-            if(!user){
-                console.log('Unknown User'); //debugging
-                return done(null, false, {message: 'Unknown User'});
-            }
-            console.log('user found'); // debugging
-
-            User.comparePassword(password, user.password, function(err, isMatch){
-                if(err) throw err;
-                if(isMatch){
-                    console.log(username + "logged in"); //debugging
-                    return done(null, user);
-                } else {
-                    console.log('Invalid password'); //debugging
-                    return done(null, false, {message: 'Invalid password'});
-                }
-            });
-        });
-    })
-);
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-    User.getUserById(id, function(err, user) {
-        done(err, user);
-    });
-});
-
-
-// // Rewriting Login
-// router.post('/login', function(req, res) {
-//     var username = req.body.username;
-//     var password = req.body.password
-//
-// });
-
 
 router.post('/login',
     passport.authenticate('local', {successRedirect: '/', failureFlash:true}),
     function(req, res) {
-    console.log('authenticate called'); // debugging
         res.redirect('/');
     }
 );
