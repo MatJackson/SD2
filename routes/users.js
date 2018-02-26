@@ -61,32 +61,47 @@ router.post('/register', function(req, res) {
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
     var errors = req.validationErrors(); // deprecated, find new way
-
-    if(errors) {
-        //shakeModal();
-        // res.render('index', {
-        //     errors:errors
-        // });
-    } else {
-        var newUser = new User({
-            username: username,
-            email: email,
-            password: password
-        });
-
-        User.createUser(newUser, function(err, user) {
-            if (err) throw err;
-            console.log(user.username + " created");
-        });
-
-        req.flash('success_msg', 'You have successfully registered an account');
-
-        // Logs in user after successfull registration
-        req.login(newUser, function(err){
-            if (err) throw err;
-            res.redirect('/');
-        })
-    }
+    
+    User.findOne({username:username},function(err,user){
+        if(err)
+        console.log(err);
+        else{
+          
+            if(errors) {
+                //shakeModal();
+                // res.render('index', {
+                //     errors:errors
+                // });
+            } else if (!user){
+                
+                var newUser = new User({
+                    username: username,
+                    email: email,
+                    password: password
+                });
+        
+                User.createUser(newUser, function(err, user) {
+                    if (err)  {
+                        console.log(err);
+                    }
+                    //throw err;
+                    console.log(user.username + " created");
+                });
+        
+                req.flash('success_msg', 'You have successfully registered an account');
+        
+                // Logs in user after successfull registration
+                req.login(newUser, function(err){
+                    if (err) throw err;
+                    res.redirect('/');
+                })
+            }
+            else{
+                console.log(username+" already exists.");
+                res.redirect('/');
+            }
+        }
+    });
 });
 
 router.post('/login',
