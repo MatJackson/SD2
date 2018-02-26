@@ -24,20 +24,32 @@ var postSchema = mongoose.Schema({
         default: 0
     },
 
+    // voteArray: [{
+    //     id:{ 
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref:"User"
+    //     },    
+    //     didLike: {
+    //         type: Boolean, 
+    //         default: false
+    //     },
+    //     didDislike: {
+    //         type: Boolean, 
+    //         default: false
+    //     }
+    //     }],
+
     voteArray: [{
-        id:{ 
-            type: mongoose.Schema.Types.ObjectId,
-            ref:"User"
+        userID:{ 
+            type: String
         },    
         didLike: {
-            type: Boolean, 
-            default: false
+            type: Boolean
         },
         didDislike: {
-            type: Boolean, 
-            default: false
+            type: Boolean
         }
-        }],
+    }],
 
     timePosted: String
 });

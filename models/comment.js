@@ -18,19 +18,31 @@ var commentSchema = mongoose.Schema(
            default: 0
         },
 
+        // voteArray: [{
+        // id:{ 
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref:"User"
+        // },    
+        // didLike: {
+        //     type: Boolean, 
+        //     default: false
+        // },
+        // didDislike: {
+        //     type: Boolean, 
+        //     default: false
+        // }
+        // }],
+
         voteArray: [{
-        id:{ 
-            type: mongoose.Schema.Types.ObjectId,
-            ref:"User"
-        },    
-        didLike: {
-            type: Boolean, 
-            default: false
-        },
-        didDislike: {
-            type: Boolean, 
-            default: false
-        }
+            userID:{ 
+                type: String
+            },    
+            didLike: {
+                type: Boolean
+            },
+            didDislike: {
+                type: Boolean
+            }
         }],
 
         timePosted: String
