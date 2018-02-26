@@ -60,18 +60,18 @@
                     </form>
                 
                     <div class="ui labeled button" tabindex="0">
-                      <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/like" class="ui green button">
+                      <a href="/post/<%= post._id %>/user/<%= user._id %>/<%= post.title %>/comments/like" class="ui green button">
                         <i class="thumbs up icon"></i> Like
                       </a>
-                      <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/like" class="ui basic green left pointing label">
+                      <a href="/post/<%= post._id %>/user/<%= user._id %>/<%= post.title %>/comments/like" class="ui basic green left pointing label">
                         <%= post.like %>
                       </a>
                     </div>
                     <div class="ui labeled button" tabindex="0">
-                      <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/dislike" class="ui red button">
+                      <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/dislike" class="ui red button">
                         <i class="thumbs down icon"></i> Dislike
                       </a>
-                      <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/dislike" class="ui basic red left pointing label">
+                      <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/dislike" class="ui basic red left pointing label">
                         <%= post.dislike %>
                       </a>
                     </div>
@@ -95,18 +95,18 @@
 
                             <span class="pull-left">
                               <div class="ui labeled button" tabindex="0">
-                                <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
+                                <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
                                   <i class="thumbs up icon"></i> Like
                                 </a>
-                                <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
+                                <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
                                   <%= comment.like %>
                                 </a>
                               </div>
                               <div class="ui labeled button" tabindex="0">
-                                <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
+                                <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
                                   <i class="thumbs down icon"></i> Dislike
                                 </a>
-                                <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
+                                <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
                                   <%= comment.dislike %>
                                 </a>
                               </div>
