@@ -4,3 +4,6 @@
 #description, #title, #commentSection, #comments{
     word-wrap: break-word;
 }
+#bestAnswer{
+    background-color: lawngreen;
+}

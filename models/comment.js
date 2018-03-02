@@ -45,7 +45,9 @@ var commentSchema = mongoose.Schema(
             }
         }],
 
-        timePosted: String
+        timePosted: String,
+
+        bestAnswer: Boolean
 
     });
 
