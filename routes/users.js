@@ -10,11 +10,6 @@ router.get('/register', function(req, res) {
     res.render('index');
 });
 
-// Login
-router.get('/login', function(req, res) {
-    res.render('index');
-});
-
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
@@ -26,7 +21,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 // Passport Configuration
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy({passReqToCallback : true},
     function(req, username, password, done) {
         User.getUserByUsername(username, function(err, user){
             if(err) throw err;
@@ -104,12 +99,17 @@ router.post('/register', function(req, res) {
     });
 });
 
+// Login
+router.get('/login', function(req, res) {
+    res.render('index', {message: req.flash('loginMessage')} );
+});
+
 router.post('/login',
     passport.authenticate('local', {
       successRedirect: '/',
       failureRedirect: '/',
-      failureFlash:true}
-    ),function(req, res) {
+      failureFlash:true
+    }),function(req, res) {
         res.redirect('/');
     }
 );

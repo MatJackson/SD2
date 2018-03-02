@@ -9,7 +9,7 @@ var datetime = require('node-datetime');
 *   Homepage Endpoint
 */
 router.get('/', function(req,res){
-    res.render('index');
+    res.render('index', { message: req.flash('loginMessage') });
 });
 
 router.get("/allposts",function(req,res){
@@ -18,7 +18,7 @@ router.get("/allposts",function(req,res){
 		if(err)
 		console.log(err);
 		else{
-			res.render("allposts",{post:allPosts});
+			res.render("allposts",{post:allPosts, message: req.flash('loginMessage')});
 		}
 	});
     
@@ -72,7 +72,7 @@ router.get('/post/:postid/user/:userid/:title', function(req, res) {
         else {
            
             // Renders postpage with correct content
-            res.render('postpage',{post:foundPost}); 
+            res.render('postpage',{post:foundPost},{message:req.flash('loginMessage')}); 
         }
     });
 });
@@ -80,7 +80,7 @@ router.get('/post/:postid/user/:userid/:title', function(req, res) {
 router.get("/post/:postid/user/:userid/:title/edit",checkPostOwnership, function(req,res){
     
         Post.findById(req.params.postid,function(err,foundPost){       
-                res.render("editPost",{post:foundPost});           
+                res.render("editPost",{post:foundPost},{message:req.flash('loginMessage')});           
         }); 
 });
 //UPDATE ROUTE
