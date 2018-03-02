@@ -27,11 +27,11 @@ passport.deserializeUser(function(id, done) {
 
 // Passport Configuration
 passport.use(new LocalStrategy(
-    function(username, password, done) {
+    function(req, username, password, done) {
         User.getUserByUsername(username, function(err, user){
             if(err) throw err;
             if(!user){
-                return done(null, false, {message: 'Unknown User'});
+                return done(null, false, req.flash('loginMessage', 'No user found.'));
             }
 
             User.comparePassword(password, user.password, function(err, isMatch){
@@ -39,7 +39,7 @@ passport.use(new LocalStrategy(
                 if(isMatch){
                     return done(null, user);
                 } else {
-                    return done(null, false, {message: 'Invalid password'});
+                    return done(null, false, req.flash('loginMessage', 'Invalid password'));
                 }
             });
         });
@@ -105,17 +105,18 @@ router.post('/register', function(req, res) {
 });
 
 router.post('/login',
-    passport.authenticate('local', {successRedirect: '/', failureFlash:true}),
-    function(req, res) {
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/',
+      failureFlash:true}
+    ),function(req, res) {
         res.redirect('/');
     }
 );
 
 router.get('/logout', function(req, res){
     req.logout();
-
     req.flash('success_msg', 'You are logged out');
-
     res.redirect('/');
 });
 
