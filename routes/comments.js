@@ -30,6 +30,7 @@ router.post("/post/:postid/user/:userid/:title/comments", isLoggedIn, function(r
 					var currentDate = datetime.create();
 					var formattedDate = currentDate.format('Y-m-d H:M:S');
 					comment.bestAnswer=false;
+					comment.helpful=true;
 					comment.author.id=req.user._id;
 					comment.author.username = req.user.username;
 					comment.timePosted = formattedDate;
@@ -616,27 +617,6 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/bestanswer", i
 						post.save();
 						
 					}
-					// 	else{
-					// 	comment.bestAnswer=false;
-					// 	comment.save();
-					// 		//req.params.commentid
-					// 	Comment.findByIdAndUpdate(comment.id,{$set: {bestAnswer:true}},function(err,comment){
-					// 		if(err){
-					// 			console.log(err);
-			
-					// 		}
-					// 		else{
-								
-								
-					// 			comment.save();
-					// 			// post.comments.push(comment._id);
-					// 			post.save();
-					// 			res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
-			
-					// 	 	}
-					// 	 });
-					//  }
-	
 				});
 			
 			}
@@ -646,68 +626,52 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/bestanswer", i
 
 				}
 				else{
+					comment.helpful=true;
 					comment.save();
-					// post.comments.push(comment._id);
-					
 					post.save();
 					res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
 
 				}
-			});
-			
-				
-				
-			
-			// Comment.findOne({bestAnswer:bestAnswer},function(err,comment){
-			// 	if (err){
-			// 		console.log(err);
-			// 	}
-			// 	else if(!comment){
-			// 		// console.log("can't find 1");
-			// 		Comment.findByIdAndUpdate(req.params.commentid,{$set: {bestAnswer:true}},function(err,comment){
-			// 			if(err){
-			// 				console.log(err);
-		
-			// 			}
-			// 			else{
-							
-							
-			// 				comment.save();
-			// 				// post.comments.push(comment._id);
-			// 				post.save();
-			// 				res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
-		
-			// 			}
-			// 		});
-			// 	}
-			// 	else{
-			// 		comment.bestAnswer=false;
-			// 		comment.save();
-
-			// 		Comment.findByIdAndUpdate(req.params.commentid,{$set: {bestAnswer:true}},function(err,comment){
-			// 			if(err){
-			// 				console.log(err);
-		
-			// 			}
-			// 			else{
-							
-							
-			// 				comment.save();
-			// 				// post.comments.push(comment._id);
-			// 				post.save();
-			// 				res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
-		
-			// 			}
-			// 		});
-
-			// 	}
-			// });
-		
+			});		
 		}
 	});
 });
 
-
+router.get("/post/:postid/user/:userid/:title/comments/:commentid/nothelpful", isLoggedIn, function(req,res){
+	Post.findById(req.params.postid,function(err,post){
+		if(err){
+		console.log(err);
+		//error message for time being
+		res.send("Cannot find post");
+		}
+		else{
+			
+			
+				Comment.findById(req.params.commentid,function(err,comment){
+					if(err){
+						console.log(err);
+					} else{
+						if(comment.helpful == true){
+							comment.helpful=false;
+							comment.save();
+							post.save();
+						}
+						else{
+							comment.helpful=true;
+							comment.save();
+							post.save();
+						}
+						
+												
+					}
+				});
+			
+			
+			res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
+			
+		}
+	});
+});
 
 
 

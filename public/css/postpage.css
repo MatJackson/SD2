@@ -4,6 +4,9 @@
 #description, #title, #commentSection, #comments{
     word-wrap: break-word;
 }
-#bestAnswer{
-    background-color: lawngreen;
+#notHelpful{
+    opacity:0.5;
+}
+#notHelpful:hover{
+    opacity:1;
 }

@@ -47,7 +47,9 @@ var commentSchema = mongoose.Schema(
 
         timePosted: String,
 
-        bestAnswer: Boolean
+        bestAnswer: Boolean,
+
+        helpful: Boolean
 
     });
 

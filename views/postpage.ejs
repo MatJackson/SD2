@@ -53,11 +53,13 @@
                       <p id="title" contenteditable="false"><%= post.author.username %> asks: <%= post.title %></p>
                       
                       <p id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><%= post.description %></p>
-                      <a class="btn btn-xs btn-warning" href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/edit">Edit</a>
-                    <form id="delete-form" action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/?_method=DELETE" method="POST">
-                        <button class="btn btn-xs btn-danger">Delete</button>
-                        <p id="timestamp" class="pull-right"> Posted on <%= post.timePosted %> </p>
-                    </form>
+                      <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
+                          <a class="btn btn-xs btn-warning" href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/edit">Edit</a>
+                        <form id="delete-form" action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/?_method=DELETE" method="POST">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                      <% } %>
+                    <p id="timestamp" class="pull-right"> Posted on <%= post.timePosted %> </p>
                 
                     <div class="ui labeled button" tabindex="0">
                       <a href="/post/<%= post._id %>/user/<%= user._id %>/<%= post.title %>/comments/like" class="ui green button">
@@ -79,19 +81,17 @@
               </div>
             </div>
 
-            
-
 
           </div>
-          <div class="well">
+          
               <% post.comments.forEach(function(comment){ %>
+                <!-- loop once to check if best answer exist -->
                 <% if (comment.bestAnswer==true){%>
-                  <div id="bestAnswer">
+                  <div class="well">
                   <p><strong><%= comment.author.username %></strong></p>
                       <span class="pull-right"><%= comment.timePosted %></span>
-                      <p id="comments"><%= comment.text %></p>
-                      <hr>
-                      <span class="pull-left">
+                      <p id="comments"><img src="https://imgur.com/TKhzibE.png" alt="best answer" height="20" width="20" style = "margin-top: -5px"> <strong> Best Answer: </strong><%= comment.text %></p>
+                  
                           <div class="ui labeled button" tabindex="0">
                             <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
                               <i class="thumbs up icon"></i> Like
@@ -110,31 +110,31 @@
                             <!-- show only if user owns th post -->
                          <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
                           <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
-                            Set As Best Answer
+                            Cancel Best Answer
                           </a>
                          <% } %>
                             
-
                           </div>
-
-                
-                          
-
-                        </span>
-                  </div>
+                                 
+                    </div>
                 <% } %>
               <%})%>
+                   
+              
+              <div class="well">
               <% post.comments.forEach(function(comment){ %>
                 <div class="row">
                     <div class="col-md-12">
                       
                     <% if(comment.bestAnswer!=true){ %>
+                      <% if(comment.helpful != true){ %>
+                        <div id="notHelpful">
                             <p><strong><%= comment.author.username %></strong></p>
                             <span class="pull-right"><%= comment.timePosted %></span>
                             <p id="comments"><%= comment.text %></p>
-                            <hr>
+                            
 
-                            <span class="pull-left">
+                            
                               <div class="ui labeled button" tabindex="0">
                                 <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
                                   <i class="thumbs up icon"></i> Like
@@ -157,12 +157,45 @@
                                   <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
                                     Set As Best Answer
                                   </a>
+                                  <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful">not helpful</a>
                                  <% } %>
                               </div>
+                            <hr>
+                          </div>
+
+                       <% } else{ %>
+                        <p><strong><%= comment.author.username %></strong></p>
+                        <span class="pull-right"><%= comment.timePosted %></span>
+                        <p id="comments"><%= comment.text %></p>
+                      
+                          <div class="ui labeled button" tabindex="0">
+                            <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
+                              <i class="thumbs up icon"></i> Like
+                            </a>
+                            <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
+                              <%= comment.like %>
+                            </a>
+                          </div>
+                          <div class="ui labeled button" tabindex="0">
+                            <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
+                              <i class="thumbs down icon"></i> Dislike
+                            </a>
+                            <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
+                              <%= comment.dislike %>
+                            </a>
 
 
-                            </span>
-                            <% } %>
+                            <!-- show only if user owns th post -->
+                            <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
+                              <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
+                                Set As Best Answer
+                              </a>
+                              <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful">not helpful</a>
+                             <% } %>
+                          </div>
+                          <hr>
+                        <% } %>
+                    <% } %>
                             
 
                     </div>
@@ -184,11 +217,6 @@
                             <button class="btn btn-sm btn-default btn-block">Submit! </button>
                         </div>
                     </form>
-                
-
-               
-                
-                
                 
             </div>
 
