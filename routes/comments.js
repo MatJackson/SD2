@@ -29,14 +29,15 @@ router.post("/post/:postid/user/:userid/:title/comments", isLoggedIn, function(r
 				else{
 					var currentDate = datetime.create();
 					var formattedDate = currentDate.format('Y-m-d H:M:S');
-					
+					comment.bestAnswer=false;
+					comment.helpful=true;
 					comment.author.id=req.user._id;
 					comment.author.username = req.user.username;
 					comment.timePosted = formattedDate;
 					comment.save();
 					post.comments.push(comment._id);
 					post.save();
-					res.redirect("/post/"+post._id+"/user/" + post.author._id +"/"+ post.title);
+					res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
 
 				}
 			});
@@ -596,9 +597,81 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/dislike", isLo
 
 
 
+router.get("/post/:postid/user/:userid/:title/comments/:commentid/bestanswer", isLoggedIn, function(req,res){
+	Post.findById(req.params.postid,function(err,post){
 
+		if(err){
+		console.log(err);
+		//error message for time being
+		res.send("Cannot find post");
+		}
+		else{
+			var commentsArray=post.comments;
+			for(var i = 0; i<commentsArray.length;i++){
+				Comment.findById(commentsArray[i],function(err,comment){
+					if(err){
+						console.log(err);
+					} else{
+						comment.bestAnswer=false;
+						comment.save();
+						post.save();
+						
+					}
+				});
+			
+			}
+			Comment.findByIdAndUpdate(req.params.commentid,{$set: {bestAnswer:true}},function(err,comment){
+				if(err){
+					console.log(err);
 
+				}
+				else{
+					comment.helpful=true;
+					comment.save();
+					post.save();
+					res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
 
+				}
+			});		
+		}
+	});
+});
+
+router.get("/post/:postid/user/:userid/:title/comments/:commentid/nothelpful", isLoggedIn, function(req,res){
+	Post.findById(req.params.postid,function(err,post){
+		if(err){
+		console.log(err);
+		//error message for time being
+		res.send("Cannot find post");
+		}
+		else{
+			
+			
+				Comment.findById(req.params.commentid,function(err,comment){
+					if(err){
+						console.log(err);
+					} else{
+						if(comment.helpful == true){
+							comment.helpful=false;
+							comment.save();
+							post.save();
+						}
+						else{
+							comment.helpful=true;
+							comment.save();
+							post.save();
+						}
+						
+												
+					}
+				});
+			
+			
+			res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
+			
+		}
+	});
+});
 
 
 

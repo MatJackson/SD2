@@ -83,6 +83,11 @@ app.use(expressValidator({
     }
 }));
 
+app.use(function(req,res,next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
 // Connect Flash
 app.use(flash());
 
