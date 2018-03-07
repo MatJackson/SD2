@@ -54,6 +54,6 @@ var postSchema = mongoose.Schema({
     timePosted: String
 });
 
-postSchema.index({title: 'text'});
+postSchema.index({'$**': 'text'});
 
 module.exports = mongoose.model('Post', postSchema);;
