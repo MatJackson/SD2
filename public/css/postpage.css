@@ -6,7 +6,7 @@
 }
 /*not needed, it will turn the whole block to opacity0.5*/
 #notHelpful{
-    opacity:0.5;
+    /* opacity:0.5; */
 }
 #notHelpful:hover{
     opacity:1;
