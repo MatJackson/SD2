@@ -4,9 +4,20 @@
 #description, #title, #commentSection, #comments{
     word-wrap: break-word;
 }
+/*not needed, it will turn the whole block to opacity0.5*/
 #notHelpful{
     opacity:0.5;
 }
 #notHelpful:hover{
     opacity:1;
+}
+/* Set black background color, white text and some padding */
+footer {
+    background-color: #555;
+    color: white;
+    padding: 15px;
+    }
+
+.container{
+    margin-top: 7.0em;
 }

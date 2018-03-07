@@ -16,19 +16,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <style>    
-    /* Set black background color, white text and some padding */
-
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-
-    .container{
-  margin-top: 7.0em;
-}
-  </style>
 </head>
 
 <body>
@@ -266,21 +253,17 @@
                 </div>
                 
             <% }) %>
+            <label for="addComment">Add New Comment to: <h3><%= post.title%></h3></label>
            
-                    <h6 id="commentSection">Add New Comment to <strong><%= post.title %></strong> </h6>
-                   
-                    <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
-                        <div class="form-group">
-                            
-                            <textarea name="comment[text]" placeholder="Type Here"></textarea>
-
-
-                        </div>
-                        
-                        <div class="form-group">
-                            <button class="btn btn-sm btn-default btn-block">Submit! </button>
-                        </div>
-                    </form>
+            <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
+                
+                  <div class="form-group">
+                      <textarea class="form-control" rows="4" name="comment[text]" placeholder="Type Here"></textarea>
+                  </div>  
+                  <div class="form-group">
+                      <button class="btn btn-md btn-info btn-block">Submit! </button>
+                  </div>
+                </form>
                 
             </div>
 
@@ -290,12 +273,10 @@
       <% include rightsidebar %>
       
     </div>
-  </div>
-</div>
+   </div>
+  </div>  
 
-<% include footer %>
+  <% include footer %>
 
-</body>
-
-
+  </body>
 </html>
