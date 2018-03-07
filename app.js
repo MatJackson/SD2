@@ -29,7 +29,7 @@ var db = mongoose.connection;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var commentRoutes = require("./routes/comments");
-
+var searches = require("./routes/searches");
 
 // View Engine
 app.set('view engine', 'ejs');
@@ -83,6 +83,11 @@ app.use(expressValidator({
     }
 }));
 
+app.use(function(req,res,next){
+    res.locals.currentUser = req.user;
+    next();
+});
+
 // Connect Flash
 app.use(flash());
 
@@ -99,6 +104,7 @@ app.use(function(req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 app.use(commentRoutes);
+app.use('/', searches);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));
