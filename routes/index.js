@@ -9,7 +9,12 @@ var datetime = require('node-datetime');
 *   Homepage Endpoint
 */
 router.get('/', function(req,res){
-    res.render('index');
+    Post.find({},function(err,allPosts){
+		
+		
+			res.render('index',{post:allPosts});
+		
+	});
 });
 
 router.get("/allposts",function(req,res){

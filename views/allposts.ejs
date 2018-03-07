@@ -12,15 +12,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <style>    
-    /* Set black background color, white text and some padding */
-
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-  </style>
 </head>
 
 <body>
@@ -43,8 +34,12 @@
                             <p>You can also post question below.</p>
                             
                             <form action="/post" method="POST">
-                                <input id="titlebox" type="text" placeholder="Question...Title... " name="title">
-                                <textarea class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" placeholder="Enter description..." name="description"></textarea>
+                                <p style = "text-align: left; font-size: 18px; font-weight: bold;" > Title </p>
+                                <input id="titlebox" class="form-control input-lg"  placeholder="Question... " name="title">
+                                <br>
+                                <p style = "text-align: left; font-size: 18px; font-weight: bold;" > Description </p>
+                                <textarea class="form-control input-lg"  placeholder="Enter description..." name="description"></textarea>
+                                <br>
                                 <button type="submit" value="submit" class="submit-post btn-sm">Submit</button>
                               </form>	
                         </div>
