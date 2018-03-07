@@ -1,53 +1,26 @@
 <div class="row">
-    <div class="text-left"> <p> Top Posts... </p></div>
-    <div class="col-sm-3">
-      <div class="well">
-       <p>John</p>
-       <img src="https://i.imgur.com/5FeY2uj.png" class="img-circle"  alt="Avatar">
+    <div class = "recent_posts"> <p> Some recent posts... </p></div>
+    <% post.reverse().forEach(function(post){ %>
+    <div class="col-sm-2">
+      <div>
+       <img src="https://cdn2.iconfinder.com/data/icons/lightly-icons/30/user-480.png" height="70" width="70" alt="Avatar" style = "margin-top:20px;">
+       <p><%= post.author.username %></p>
       </div>
     </div>
-    <div class="col-sm-9">
-      <div class="well">
-        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-      </div>
+    <div class="col-sm-10">
+      <div class="well text-left">
+       <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>" class="wraptxt"> <h5><%= post.title %></h5> </a>
+        <p class="wraptxt"><%= post.description.substring(0,100)%>...</p>
+        <p class="pull-right"><%= post.timePosted %></p>
+        
+        
+    
     </div>
+    </div>
+
+<%  }); %>
   </div>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="well">
-       <p>Bo</p>
-       <img src="https://i.imgur.com/5FeY2uj.png" class="img-circle" height="55" width="55" alt="Avatar">
-      </div>
-    </div>
-    <div class="col-sm-9">
-      <div class="well">
-        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="well">
-       <p>Jane</p>
-       <img src="https://i.imgur.com/5FeY2uj.png" class="img-circle" height="55" width="55" alt="Avatar">
-      </div>
-    </div>
-    <div class="col-sm-9">
-      <div class="well">
-        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="well">
-       <p>Anja</p>
-       <img src="https://i.imgur.com/5FeY2uj.png" class="img-circle" height="55" width="55" alt="Avatar">
-      </div>
-    </div>
-    <div class="col-sm-9">
-      <div class="well">
-        <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-      </div>
-    </div>
-  </div>
+
+
+
+</div>
