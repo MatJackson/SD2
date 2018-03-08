@@ -17,6 +17,15 @@ router.get('/', function(req,res){
 	});
 });
 
+router.get('/profilepage', function(req,res){
+    Post.find({},function(err,allPosts){
+		
+		
+        res.render('profilepage',{post:allPosts});
+    
+});
+});
+
 router.get("/allposts",function(req,res){
     
     Post.find({},function(err,allPosts){

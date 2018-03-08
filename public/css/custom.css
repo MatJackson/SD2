@@ -12,7 +12,7 @@ h5 {
     font-size: 20px;
   }
 
-  .recent_posts {font-style: italic;}
+.recent_posts {font-style: italic;}
 
 textarea { 
     height: 250px;
@@ -33,6 +33,10 @@ textarea {
 #title {
     font-size: 18px;
 }
+
+#profile_picture {width: 120px; height: 120px; margin-top: 50px;}
+#profile_name {text-align: left; margin-top: 70px;}
+
 
 
     footer {
