@@ -43,6 +43,13 @@ router.post("/post/:postid/user/:userid/:title/comments", isLoggedIn, function(r
 			});
 		}
 	});
+	// Post.find({},function(err,recent){
+	// 	if(err)
+	// 	console.log(err);
+	// 	else{
+	// 		res.render("postpage",{post:recent});
+	// 	}
+	// });
 });
 
 // router.get("/post/:postid/user/:userid/:title/comments/", isLoggedIn, function(req,res){
@@ -180,6 +187,13 @@ router.get("/post/:postid/user/:userid/:title/comments/like", isLoggedIn, functi
 		}
 
 	});
+	// Post.find({},function(err,recent){
+	// 	if(err)
+	// 	console.log(err);
+	// 	else{
+	// 		res.render("postpage",{post:recent});
+	// 	}
+	// });
 
 });
 
@@ -314,6 +328,13 @@ router.get("/post/:postid/user/:userid/:title/comments/dislike", isLoggedIn, fun
 		}
 
 	});
+	// Post.find({},function(err,recent){
+	// 	if(err)
+	// 	console.log(err);
+	// 	else{
+	// 		res.render("postpage",{post:recent});
+	// 	}
+	// });
 
 });
 
@@ -450,6 +471,13 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/like", isLogge
 		}
 
 	});
+	// Post.find({},function(err,recent){
+	// 	if(err)
+	// 	console.log(err);
+	// 	else{
+	// 		res.render("postpage",{post:recent});
+	// 	}
+	// });
 
 });
 
@@ -587,6 +615,13 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/dislike", isLo
 		}
 
 	});
+	// Post.find({},function(err,recent){
+	// 	if(err)
+	// 	console.log(err);
+	// 	else{
+	// 		res.render("postpage",{post:recent});
+	// 	}
+	// });
 
 });
 
@@ -635,6 +670,13 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/bestanswer", i
 			});		
 		}
 	});
+	// Post.find({},function(err,recent){
+	// 	if(err)
+	// 	console.log(err);
+	// 	else{
+	// 		res.render("postpage",{post:recent});
+	// 	}
+	// });
 });
 
 router.get("/post/:postid/user/:userid/:title/comments/:commentid/nothelpful", isLoggedIn, function(req,res){
@@ -668,9 +710,16 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/nothelpful", i
 			
 			
 			res.redirect("/post/"+post._id+"/user/" +req.params.userid+"/"+ post.title);
-			
+			 
 		}
 	});
+	// Post.find({},function(err,recent){
+	// 	if(err)
+	// 	console.log(err);
+	// 	else{
+	// 		res.render("postpage",{post:recent});
+	// 	}
+	// });
 });
 
 
