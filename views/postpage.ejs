@@ -28,7 +28,6 @@
   <div class="container">    
 
     <div class="row"> 
-      <!-- <% include leftsidebar %> -->
       <div class="col-sm-10">
       <!-- this part is for the question the user asked  -->
         <div class="row">
@@ -144,9 +143,9 @@
                   Cancel Best Answer
                 </a>
               <% } %>
-                
+            
             </div>
-                                 
+
           </div>
         <% } %>
         <%})%>
@@ -207,7 +206,22 @@
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful">not helpful</a>
                       <% } %>
                       </div>
-                    <hr>
+
+                      <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
+                        <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                          <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
+                        </form>
+                        
+                        <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+                          <div>
+                            <label style = "font-size: 18px;">Comment</label>
+                            <textarea class="form-control input-md" rows="4" name="comment"><%= comment.text %></textarea>
+                          </div>
+                          <br>
+                          <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
+                        </form>
+                        <% } %>
+                      <hr>
                   </div>
 
                   <% } else{ %>
@@ -259,6 +273,26 @@
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful">not helpful</a>
                         <% } %>
                       </div>
+                      
+                      <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
+                      <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
+                      </form>
+                      
+                      <!-- <button onclick="hideAndSeek()">Edit </button>  -->
+                        <!-- <div id="edit"> -->
+                          <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+                            <div>
+                              <label style = "font-size: 10px;">Edit Comment</label>
+                              <textarea class="form-control input-md" rows="4" name="comment"><%= comment.text %></textarea>
+                            </div>
+                            <br>
+                            <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
+                          </form>
+                        <!-- </div> -->
+                        <% } %>
+                          
+                        
                     <hr>
                   <% } %>
                  <% } %>
@@ -287,6 +321,17 @@
   </div>  
 
   <% include footer %>
+
+  <script>
+      function hideAndSeek() {
+          var x = document.getElementById("edit");
+          if (x.style.display === "none") {
+              x.style.display = "block";
+          } else {
+              x.style.display = "none";
+          }
+      }
+      </script>
 
   </body>
 </html>
