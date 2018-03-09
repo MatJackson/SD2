@@ -17,22 +17,6 @@ var commentSchema = mongoose.Schema(
            type: Number, 
            default: 0
         },
-
-        // voteArray: [{
-        // id:{ 
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref:"User"
-        // },    
-        // didLike: {
-        //     type: Boolean, 
-        //     default: false
-        // },
-        // didDislike: {
-        //     type: Boolean, 
-        //     default: false
-        // }
-        // }],
-
         voteArray: [{
             userID:{ 
                 type: String

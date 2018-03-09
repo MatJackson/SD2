@@ -109,8 +109,6 @@ app.use('/', searches);
 // Set Port
 app.set('port', (process.env.PORT || 3000));
 
-// What's this for? ask Steph -MJ
-
 // set static path
 app.use(express.static(path.join(__dirname, 'public')));
 
