@@ -468,7 +468,7 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/bestanswer", i
 					if(err){
 						console.log(err);
 					} else{
-						comment.bestAnswer=false;
+						comment.bestAnswer=false;						
 						comment.save();
 						post.save();
 						
@@ -524,6 +524,46 @@ router.get("/post/:postid/user/:userid/:title/comments/:commentid/nothelpful", i
 	});
 });
 
+//UPDATE ROUTE
+router.put("/post/:postid/user/:userid/:title/comments/:commentid/", checkCommentOwnership, function(req,res){
+	Comment.findByIdAndUpdate(req.params.commentid,{text:req.body.comment},function(err,updatedComment){
+		if(err){
+			console.log(err);
+            res.redirect("/");
+		} else{
+			updatedComment.save();
+			res.redirect("/post/"+req.params.postid+"/user/" +req.params.userid+"/"+ req.params.title);
+		}
+	});
+});
+
+//DELETE ROUTE
+router.delete("/post/:postid/user/:userid/:title/comments/:commentid/",checkCommentOwnership, function(req,res){
+	
+	Comment.findByIdAndRemove(req.params.commentid,function(err){
+		if(err){
+			console.log(err);
+            res.redirect("/");
+		} else{
+			Post.findById(req.params.postid,function(err,foundPost){
+				console.log("start:"+ foundPost.comments)
+				var removed=false;
+				var commentsArray=foundPost.comments;
+				for (var i =0; i<commentsArray.length;i++){
+					if(req.params.commentid == commentsArray[i]){
+						var index = commentsArray.indexOf(req.params.commentid);
+						commentsArray.splice(index,1);
+					}
+				}
+				foundPost.save();
+				console.log(foundPost.comments);
+			});
+			
+			res.redirect("/post/"+req.params.postid+"/user/" +req.params.userid+"/"+ req.params.title);
+		}
+	});
+});
+
 //MIDDLE WARE
 function isLoggedIn(req,res,next){
 	if(req.isAuthenticated()){
@@ -532,6 +572,25 @@ function isLoggedIn(req,res,next){
 
 	res.redirect("/");
 
+}
+function checkCommentOwnership(req,res,next){
+    if(req.isAuthenticated()){
+        Comment.findById(req.params.commentid,function(err,foundComment){
+            if(err){
+                res.redirect("back");
+            } else {
+                //check if pst belong to author
+                if(foundComment.author.id.equals(req.user._id))
+                next();
+
+                else{ //need better error message later
+                    res.redirect("back");
+                }
+            }
+        });
+    } else{
+        res.redirect("back");
+    }
 }
 
 module.exports = router;
