@@ -8,13 +8,13 @@
       </div>  -->
       <div>
           <p> Recent Posts... </p>
+         
         </div>
+
+         <% for(var i = 0; i<3; i++){
+           %>
         <div class="well">
-          <p> Recent Post 1</p>
+          <a href="/post/<%= post[i]._id %>/user/<%= post[i].author.id %>/<%= post[i].title %>" class="wraptxt"> <h5><%= post[i].title %></h5> </a>
         </div>
-        <div class="well">
-          <p> Recent Post 2</p>
-        </div>
-        <div class="well">
-          <p> Recent Post 3</p>
-        </div>
+        
+        <%  } %>  
