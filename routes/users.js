@@ -151,22 +151,24 @@ router.post('/forgotpassword', function(req, res) {
                 });
 
                 req.flash('success_msg', 'You have successfully changed password');
-                res.redirect('/');
+                
+                // User.findOne({username:username},function(err,modifiedUser){
+                //     if(err)
+                //     {
+                //         console.log(err);
+                //     }
+                //     else
+                //     {
+                //          // Logs in user after successfull password modification
+                //         var modifieduser = modifiedUser;
+                //         req.login(modifieduser, function(err){
+                //             if (err) throw err;
+                //             res.redirect('/');
+                //         })
+                //     }
+                // });
 
-                User.findOne({username:username},function(err,modifiedUser){
-                    if(err)
-                    {
-                        console.log(err);
-                    }
-                    else
-                    {
-                         // Logs in user after successfull password modification
-                        req.login(modifiedUser, function(err){
-                            if (err) throw err;
-                            res.redirect('/');
-                        })
-                    }
-                });
+                res.redirect('/');
             }
             else
             {
