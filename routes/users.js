@@ -4,6 +4,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var modal = require('../public/login');
 var User = require('../models/user');
+var bcrypt = require('bcryptjs');
 
 // Register
 router.get('/register', function(req, res) {
@@ -12,6 +13,11 @@ router.get('/register', function(req, res) {
 
 // Login
 router.get('/login', function(req, res) {
+    res.render('index');
+});
+
+// Forgot Password
+router.get('/forgotpassword', function(req, res) {
     res.render('index');
 });
 
@@ -98,6 +104,73 @@ router.post('/register', function(req, res) {
             }
             else{
                 console.log(username+" already exists.");
+                res.redirect('/');
+            }
+        }
+    });
+});
+
+// Forgot Password
+router.post('/forgotpassword', function(req, res) {
+    var username = req.body.username;
+    var email = req.body.email;
+    var password = req.body.password;
+    var passwordVerification = req.body.passwordVerification;
+
+    // Validation
+    req.checkBody('username', 'Username is required').notEmpty();
+    req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody('email', 'Email is not valid').isEmail();
+    req.checkBody('password', 'Password is required').notEmpty();
+    req.checkBody('passwordVerification', 'Passwords do not match').equals(req.body.password);
+
+    var errors = req.validationErrors(); // deprecated, find new way
+
+    User.findOne({username:username},function(err,user){
+        if(err)
+        {
+            console.log(err);
+        }
+        else
+        {
+            
+            if(errors) 
+            {
+                console.log(err);
+            } 
+            else if (user && user.email === email)
+            {
+                bcrypt.genSalt(10, function(err, salt) 
+                {
+                    bcrypt.hash(password, salt, function(err, hash) 
+                    {
+                        user.password = hash;
+                        user.save();
+                        console.log(user.username + "'s Password Has Been Updated");
+                    });
+                });
+
+                req.flash('success_msg', 'You have successfully changed password');
+                res.redirect('/');
+
+                User.findOne({username:username},function(err,modifiedUser){
+                    if(err)
+                    {
+                        console.log(err);
+                    }
+                    else
+                    {
+                         // Logs in user after successfull password modification
+                        req.login(modifiedUser, function(err){
+                            if (err) throw err;
+                            res.redirect('/');
+                        })
+                    }
+                });
+            }
+            else
+            {
+                console.log("You have entered an invalid username and/or email !!!");
                 res.redirect('/');
             }
         }
