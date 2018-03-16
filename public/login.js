@@ -9,6 +9,19 @@ function showRegisterForm(){
     $('.error').removeClass('alert alert-danger').html('');
        
 }
+
+function showForgotPasswordForm(){
+    $('.loginBox').fadeOut('fast',function(){
+        $('.forgotPasswordBox').fadeIn('fast');
+        $('.login-footer').fadeOut('fast',function(){
+            $('.register-footer').fadeIn('fast');
+        });
+        $('.modal-title').html('Verify User');
+    }); 
+    $('.error').removeClass('alert alert-danger').html('');
+       
+}
+
 function showLoginForm(){
     $('#loginModal .registerBox').fadeOut('fast',function(){
         $('.loginBox').fadeIn('fast');
