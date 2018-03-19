@@ -22,7 +22,7 @@
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
     "ejs": "^2.5.7",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "^4.3.0",
@@ -30,12 +30,13 @@
     "method-override": "^2.3.10",
     "mocha": "3.4.2",
     "mongodb": "*",
-    "mongoose": "^5.0.7",
+    "mongoose": "^5.0.10",
     "node-datetime": "^2.0.6",
     "passport": "^0.4.0",
     "passport-http": "*",
     "passport-local": "*",
     "path": "^0.12.7",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "utils": "^0.3.1"
   }
 }

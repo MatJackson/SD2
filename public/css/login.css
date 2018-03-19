@@ -33,6 +33,24 @@
     background-color: #00A4E4;
     color: #FFFFFF;
 }
+.login .btn-login, .forgotPasswordBox .btn-passwordupdate {
+    background-color: #00BBFF;
+    border-color: #00BBFF;
+    border-width: 0;
+    color: #FFFFFF;
+    display: block;
+    margin: 0 auto;
+    padding: 15px 50px;
+    text-transform: uppercase;
+    width: 100%;
+}
+.login .btn-login:hover, .forgotPasswordBox .btn-passwordupdate:hover{
+    background-color: #00A4E4;
+    color: #FFFFFF;
+}
+.forgotpassword{
+    float: right;
+}
 .login .form-control{
     border-radius: 3px;
     background-color: rgba(0, 0, 0, 0.09);
