@@ -3,27 +3,19 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Post = require('../models/posts');
 var datetime = require('node-datetime');
-
-
 /*
 *   Homepage Endpoint
 */
 router.get('/', function(req,res){
-    //res.render('index');
-    Post.find({},function(err,index){
-		if(err)
-		console.log(err);
-		else{
-			res.render("index",{post:index});
-		}
+    Post.find({},function(err,allPosts){
+		res.render('index',{post:allPosts});
 	});
 });
 
 router.get("/allposts",function(req,res){
-    
     Post.find({},function(err,allPosts){
 		if(err)
-		console.log(err);
+		    console.log(err);
 		else{
 			res.render("allposts",{post:allPosts});
 		}
@@ -35,19 +27,9 @@ router.get("/allposts",function(req,res){
 /*
 *   Post Question Endpoint
 */
-
-
-/*
-*   Post METHOD Endpoint
-*/
 router.post('/post', isLoggedIn, function(req, res) {
     var currentDate = datetime.create();
     var formattedDate = currentDate.format('Y-m-d H:M:S');
-
-    /*
-    *UPDATED February 13: Author username and id added below   
-    Missing to get User Information (username, userid) to put in post collection 
-    */ 
    
     var post = new Post({
         title: req.body.title,
@@ -62,14 +44,12 @@ router.post('/post', isLoggedIn, function(req, res) {
     });
 
     post.save();
-    
     // redirect post to postpage with specific url
     res.redirect(`/post/${post._id}/user/${post.author.id}/${post.title}`);
 
 });
-
+//GET ROUTE
 router.get('/post/:postid/user/:userid/:title', function(req, res) {
-
     // Find post in DB using the id
     Post.findById(req.params.postid).populate("comments").exec(function(err, foundPost) {
         if (err) { // if post id is not found
@@ -77,7 +57,6 @@ router.get('/post/:postid/user/:userid/:title', function(req, res) {
             res.redirect('/error');
         } 
         else {
-           
             // Renders postpage with correct content
             res.render('postpage',{post:foundPost}); 
         }
@@ -85,24 +64,20 @@ router.get('/post/:postid/user/:userid/:title', function(req, res) {
 });
 //EDIT ROUTE
 router.get("/post/:postid/user/:userid/:title/edit",checkPostOwnership, function(req,res){
-    
         Post.findById(req.params.postid,function(err,foundPost){       
-                res.render("editPost",{post:foundPost});           
+            res.render("editPost",{post:foundPost});           
         }); 
 });
 //UPDATE ROUTE
 router.put("/post/:postid/user/:userid/:title",checkPostOwnership, function(req,res){
 	Post.findByIdAndUpdate(req.params.postid,req.body.post,function(err,updatedPost){
 		if(err){
-            
             res.redirect("/");
-            alert("Could not Find and Update Post");
 		} else{
 			res.redirect("/post/"+updatedPost._id+"/user/"+updatedPost.author.id+"/"+ updatedPost.title);
 		}
 	});
 });
-
 //DELETE ROUTE
 router.delete("/post/:postid/user/:userid/:title",checkPostOwnership, function(req,res){
 	Post.findByIdAndRemove(req.params.postid,function(err){
