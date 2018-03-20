@@ -11,13 +11,13 @@ router.get('/', function (req, res) {
   Post.find({}, function (err, index) {
     if (err) { console.log(err) } else {
       res.render('index', {
-			  post: index,
-			  loginmessage: req.flash('loginMessage'),
-			  signupmessage: req.flash('signupMessage')
+        post: index,
+        loginmessage: req.flash('loginMessage'),
+        signupmessage: req.flash('signupMessage')
       })
     }
   })
-});
+})
 
 router.get('/allposts', function (req, res) {
   Post.find({}, function (err, allPosts) {
@@ -25,8 +25,8 @@ router.get('/allposts', function (req, res) {
     else {
       res.render('allposts', {
         post: allPosts,
-	loginmessage: req.flash('loginMessage'),
-	signupmessage: req.flash('signupMessage')
+        loginmessage: req.flash('loginMessage'),
+        signupmessage: req.flash('signupMessage')
       })
     }
   })
@@ -80,7 +80,7 @@ router.get('/post/:postid/user/:userid/:title', function (req, res) {
 router.get('/post/:postid/user/:userid/:title/edit', checkPostOwnership, function (req, res) {
   Post.findById(req.params.postid, function (err, foundPost) {
     res.render('editPost', {
-      		      post: foundPost,
+      post: foundPost,
       loginmessage: req.flash('loginMessage'),
       signupmessage: req.flash('signupMessage')
     })

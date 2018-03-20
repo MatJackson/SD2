@@ -24,7 +24,7 @@ router.post('/post/:postid/user/:userid/:title/comments', isLoggedIn, function (
           var currentDate = datetime.create()
           var formattedDate = currentDate.format('Y-m-d H:M:S')
           comment.bestAnswer = false
-          comment.helpful = true\
+          comment.helpful = true
           comment.author.id = req.user._id
           comment.author.username = req.user.username
           comment.timePosted = formattedDate

@@ -3,6 +3,7 @@ var router = express.Router()
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy
 var User = require('../models/user')
+var bcrypt = require('bcryptjs')
 
 passport.serializeUser(function (user, done) {
   done(null, user.id)
