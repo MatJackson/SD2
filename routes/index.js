@@ -9,16 +9,30 @@ var datetime = require('node-datetime');
 *   Homepage Endpoint
 */
 router.get('/', function(req,res){
-    res.render('index', { message: req.flash('loginMessage') });
+    //res.render('index');
+    Post.find({},function(err,index){
+		if(err)
+		console.log(err);
+		else{
+			res.render("index",{
+			  post:index,
+			  loginmessage:req.flash('loginMessage'),
+			  signupmessage:req.flash('signupMessage')
+			});
+		}
+	});
 });
 
 router.get("/allposts",function(req,res){
     
     Post.find({},function(err,allPosts){
-		if(err)
-		console.log(err);
+		if(err) console.log(err);
 		else{
-			res.render("allposts",{post:allPosts, message: req.flash('loginMessage')});
+			res.render("allposts",
+			  {post:allPosts},
+			  {loginmessage : req.flash('loginMessage')},
+			  {signupmessage : req.flash('signupMessage')}
+			);
 		}
 	});
     
@@ -72,7 +86,11 @@ router.get('/post/:postid/user/:userid/:title', function(req, res) {
         else {
            
             // Renders postpage with correct content
-            res.render('postpage',{post:foundPost},{message:req.flash('loginMessage')}); 
+            res.render('postpage',{
+              post:foundPost,
+              loginmessage:req.flash('loginMessage'),
+              signupmessage:req.flash('signupMessage')
+            }); 
         }
     });
 });
@@ -80,7 +98,11 @@ router.get('/post/:postid/user/:userid/:title', function(req, res) {
 router.get("/post/:postid/user/:userid/:title/edit",checkPostOwnership, function(req,res){
     
         Post.findById(req.params.postid,function(err,foundPost){       
-                res.render("editPost",{post:foundPost},{message:req.flash('loginMessage')});           
+                res.render("editPost",{
+      		      post:foundPost,
+                  loginmessage:req.flash('loginMessage'),
+                  signupmessage:req.flash('signupMessage')
+                });           
         }); 
 });
 //UPDATE ROUTE

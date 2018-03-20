@@ -11,13 +11,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <% if (message.length > 0) { %>
-  <script type="text/javascript">  
-      $(document).ready(function(){
+  <% if (loginmessage.length > 0) { %>
+      <script type="text/javascript">  
+        $(document).ready(function(){
           $("#loginModal").modal('show');
-      });
-  </script>
-  <% } %>
+        });
+      </script>
+    <% } %>
+    <% if (signupmessage.length > 0) { %>
+      <script type="text/javascript">  
+        $(document).ready(function(){
+          showRegisterForm();
+          $("#loginModal").modal('show');
+        });
+      </script>
+    <% } %>
 
   <style>    
     /* Set black background color, white text and some padding */
