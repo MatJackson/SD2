@@ -36,6 +36,7 @@
     "passport-http": "*",
     "passport-local": "*",
     "path": "^0.12.7",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "standard": "^11.0.1"
   }
 }
