@@ -9,7 +9,7 @@ router.get('/search', function (req, res) {
   var resMsg = ''
   Post.find({$text: {$search: search}}, function (err, searchRes) {
     if (err) { console.log(err) } else {
-      if (searchRes.length == 0) {
+      if (searchRes.length === 0) {
         resMsg = `No results found for "${search}"`
       } else {
         resMsg = `Search results for "${search}"`

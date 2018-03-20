@@ -80,6 +80,11 @@ app.use(expressValidator({
   }
 }))
 
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user
+  next()
+})
+
 // Connect Flash
 app.use(flash())
 
@@ -100,8 +105,6 @@ app.use('/', searches)
 
 // Set Port
 app.set('port', (process.env.PORT || 3000))
-
-// What's this for? ask Steph -MJ
 
 // set static path
 app.use(express.static(path.join(__dirname, 'public')))

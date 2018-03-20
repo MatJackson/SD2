@@ -8,6 +8,7 @@ var postSchema = mongoose.Schema({
     id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
+
     },
     username: String
   },
@@ -23,22 +24,6 @@ var postSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
-
-  // voteArray: [{
-  //     id:{
-  //         type: mongoose.Schema.Types.ObjectId,
-  //         ref:"User"
-  //     },
-  //     didLike: {
-  //         type: Boolean,
-  //         default: false
-  //     },
-  //     didDislike: {
-  //         type: Boolean,
-  //         default: false
-  //     }
-  //     }],
-
   voteArray: [{
     userID: {
       type: String
@@ -54,6 +39,6 @@ var postSchema = mongoose.Schema({
   timePosted: String
 })
 
-postSchema.index({title: 'text'})
+postSchema.index({'$**': 'text'})
 
 module.exports = mongoose.model('Post', postSchema)
