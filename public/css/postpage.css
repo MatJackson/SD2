@@ -20,3 +20,6 @@ footer {
 .container{
     margin-top: 7.0em;
 }
+.wraptxt{
+    word-wrap: break-word;
+}

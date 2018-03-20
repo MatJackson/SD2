@@ -301,7 +301,7 @@
             <% }) %>
             
             <!-- Add new comment section -->
-            <label for="addComment">Add New Comment to: <h3><%= post.title%></h3></label>
+            <label for="addComment">Add New Comment to: <h3 class="wraptxt"><%= post.title%></h3></label>
            
             <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
                 
