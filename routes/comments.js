@@ -58,6 +58,7 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
         console.log('USER ID IS:' + votingArrayUserID)
         if (votingArrayUserID === userid) {
           foundUser = true
+
           if (votingArray[i].didLike) {
             console.log('1')
             Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
