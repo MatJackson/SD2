@@ -21,6 +21,7 @@ function showForgotPasswordForm () {
 }
 
 function showLoginForm () {
+  $('.forgotPasswordBox').fadeOut('fast')
   $('#loginModal .registerBox').fadeOut('fast', function () {
     $('.loginBox').fadeIn('fast')
     $('.register-footer').fadeOut('fast', function () {
