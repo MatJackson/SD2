@@ -11,16 +11,10 @@
       <div class="well text-left">
        <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>" class="wraptxt"> <h5><%= post.title %></h5> </a>
         <p class="wraptxt"><%= post.description.substring(0,100)%>...</p>
-        <p class="pull-right"><%= post.timePosted %></p>
-        
-        
+        <p class="pull-right"><%= post.timePosted %></p> 
     
+      </div>
     </div>
-    </div>
-
 <%  }); %>
-  
-
-
 
 </div>

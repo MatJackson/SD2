@@ -1,59 +1,43 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
 
 var postSchema = mongoose.Schema({
-    
-    title: String,
-    description: String,
-    author: {
-        id:{ 
-            type: mongoose.Schema.Types.ObjectId,
-            ref:"User"
-        },
-        username:String
+
+  title: String,
+  description: String,
+  author: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
     },
-    comments:[{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Comment"
-    }],
-    like: {
-        type: Number, 
-        default: 0
+    username: String
+  },
+  comments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment'
+  }],
+  like: {
+    type: Number,
+    default: 0
+  },
+  dislike: {
+    type: Number,
+    default: 0
+  },
+  voteArray: [{
+    userID: {
+      type: String
     },
-    dislike: {
-        type: Number, 
-        default: 0
+    didLike: {
+      type: Boolean
     },
+    didDislike: {
+      type: Boolean
+    }
+  }],
 
-    // voteArray: [{
-    //     id:{ 
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref:"User"
-    //     },    
-    //     didLike: {
-    //         type: Boolean, 
-    //         default: false
-    //     },
-    //     didDislike: {
-    //         type: Boolean, 
-    //         default: false
-    //     }
-    //     }],
+  timePosted: String
+})
 
-    voteArray: [{
-        userID:{ 
-            type: String
-        },    
-        didLike: {
-            type: Boolean
-        },
-        didDislike: {
-            type: Boolean
-        }
-    }],
+postSchema.index({'$**': 'text'})
 
-    timePosted: String
-});
-
-postSchema.index({title: 'text'});
-
-module.exports = mongoose.model('Post', postSchema);;
+module.exports = mongoose.model('Post', postSchema)
