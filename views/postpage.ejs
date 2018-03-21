@@ -127,7 +127,7 @@
               <% if(user !== null){ %>
                 <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
               <% } else{ %>
-                <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
+                <a href="#" class="ui red button">
               <% } %>  
                 <i class="thumbs down icon"></i> Dislike
                 </a>
@@ -135,7 +135,7 @@
               <% if(user !== null){ %>
                 <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
               <% } else{ %>
-                <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
+                <a href="#" class="ui basic red left pointing label">
               <% } %>
               <%= comment.dislike %>
                 </a>
@@ -171,7 +171,7 @@
                       <% if(user !== null){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
                       <% } else{ %>
-                        <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
+                        <a href="#" class="ui green button">
                       <% } %>
                         <i class="thumbs up icon"></i> Like
                         </a>
@@ -179,7 +179,7 @@
                       <% if(user !== null){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
                       <% } else{ %>
-                        <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
+                        <a href="#" class="ui basic green left pointing label">
                       <% } %>
                       <%= comment.like %>
                         </a>
@@ -188,7 +188,7 @@
                       <% if(user !== null){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
                       <% } else{ %>
-                        <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
+                        <a href="#" class="ui red button">
                       <% } %>  
                         <i class="thumbs down icon"></i> Dislike
                         </a>
@@ -196,7 +196,7 @@
                       <% if(user !== null){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
                       <% } else{ %>
-                        <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
+                        <a href="#" class="ui basic red left pointing label">
                       <% } %>
                       <%= comment.dislike %>
                         </a>
@@ -236,7 +236,7 @@
                     <% if(user !== null){ %>
                       <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
                     <% } else{ %>
-                      <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
+                      <a href="#" class="ui green button">
                     <% } %>
                       <i class="thumbs up icon"></i> Like
                       </a>
@@ -244,7 +244,7 @@
                     <% if(user !== null){ %>
                       <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
                     <% } else{ %>
-                      <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
+                      <a href="#" class="ui basic green left pointing label">
                     <% } %>
                     <%= comment.like %>
                       </a>
@@ -254,14 +254,14 @@
                       <% if(user !== null){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
                       <% } else{ %>
-                        <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
+                        <a href="#" class="ui red button">
                       <% } %>  
                       <i class="thumbs down icon"></i> Dislike
                         </a>
                       <% if(user !== null){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
                       <% } else{ %>
-                        <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
+                        <a href="#" class="ui basic red left pointing label">
                       <% } %>
                       <%= comment.dislike %>
                         </a>
