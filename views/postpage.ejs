@@ -283,15 +283,13 @@
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful" class="ui info button">not helpful</a>
                         <% } %>
                       
-
-                      
                       <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
                       <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                         <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                       </form>
-                      <button class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" id="editButtonComment">Edit</button>
 
-                        <div id="<%= comment._id %>" class="comments">
+                      <button onclick="hideAndSeek('<%= comment._id %>')"class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" id="editButtonComment">Edit</button>
+                        <div id="<%= comment._id %>" style="display:none;">
                           <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                             <div>
                               <label style = "font-size: 10px;">Edit Comment</label>
@@ -301,7 +299,6 @@
                             <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
                           </form>
                         </div>
-                      
                         <% } %>
                     <hr>
                   <% } %>
@@ -313,7 +310,6 @@
             <!-- Add new comment section -->
 
             <label for="addComment">Add New Comment to: <h4 class="wraptxt"><%= post.title%></h4></label>
-           
 
             <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
               <% if(user !== null){ %>  
@@ -344,30 +340,14 @@
   <% include footer %>
 
   <script>
-      function hideAndSeek($comment_id) {
-          var x = document.getElementById('comment_id');
+      function hideAndSeek(comment_id) {
+          var x = document.getElementById(comment_id);
           if (x.style.display == "none") {
               x.style.display = "block";
           } else {
               x.style.display = "none";
           }
       };
-
-      // function hide(comment_id) {
-      //   document.getElementById(comment_id).style.display = "none";
-      // }
-      // $(document).ready(function(){
-      //   $("#editButtonComment").click(function(){
-      //     if($(comment._id).is(':hidden')==true){
-      //       $(comment._id).show();
-
-      //     }
-      //     else{
-      //       $(comment._id).hide();
-
-      //     }
-      //   });
-      // });
       </script>
 
   </body>
