@@ -37,7 +37,7 @@
 
                 <p style="float:right;" id="timestamp" class="pull-right"> Posted on <%= post.timePosted %> </p>
 
-                <p id="title" contenteditable="false"><%= post.author.username %> asks: <%= post.title %></p>
+                <p id="title" contenteditable="false"><strong><%= post.author.username %> asked: <%= post.title %></strong></p>
                       
                 <p id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><%= post.description %></p>
                     
@@ -55,7 +55,7 @@
                   <% if(user !== null){ %>
                     <a href="/post/<%= post._id %>/user/<%= user._id %>/<%= post.title %>/comments/like" class="ui green button">
                   <% } else{ %>
-                    <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/like" class="ui green button">
+                    <a href="#" class="ui green button">
                   <% } %>
                     <i class="thumbs up icon"></i> Like
                     </a>
@@ -63,7 +63,7 @@
                   <% if(user !== null){ %>
                     <a href="/post/<%= post._id %>/user/<%= user._id %>/<%= post.title %>/comments/like" class="ui basic green left pointing label">
                     <% } else{ %>
-                    <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/like" class="ui basic green left pointing label">
+                    <a href="#" id="nonUser" class="ui basic green left pointing label">
                     <% } %>
                     <%= post.like %>
                     </a>
@@ -73,14 +73,14 @@
                   <% if(user !== null){ %>
                   <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/dislike" class="ui red button">
                     <% } else{ %>
-                  <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/dislike" class="ui red button">
+                  <a href="#" id="nonUser" class="ui red button">
                     <% } %>
                     <i class="thumbs down icon"></i> Dislike
                   </a>
                   <% if(user !== null){ %>
                   <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/dislike" class="ui basic red left pointing label">
                     <% } else{ %>
-                  <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/dislike" class="ui basic red left pointing label">
+                  <a href="#" id="nonUser" class="ui basic red left pointing label">
                     <% } %>
                     <%= post.dislike %>
                   </a>
@@ -90,6 +90,9 @@
           </div>
         </div>
           
+
+
+        
         <!--this part is for best answer -->
         <% post.comments.forEach(function(comment){ %>
           <!-- loop once to check if best answer exist -->
@@ -105,7 +108,7 @@
               <% if(user !== null){ %>
                 <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
               <% } else{ %>
-                <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui green button">
+                <a href="#" id="nonUser" class="ui green button">
               <% } %>
                 <i class="thumbs up icon"></i> Like
                 </a>
@@ -113,7 +116,7 @@
               <% if(user !== null){ %>
                 <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
               <% } else{ %>
-                <a href="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>/like" class="ui basic green left pointing label">
+                <a href="#" id="nonUser" class="ui basic green left pointing label">
               <% } %>
                 <%= comment.like %>
                 </a>
@@ -301,7 +304,7 @@
             <% }) %>
             
             <!-- Add new comment section -->
-            <label for="addComment">Add New Comment to: <h3><%= post.title%></h3></label>
+            <label for="addComment">Add New Comment to: <h4><%= post.title%></h4></label>
             
             <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
               <% if(user !== null){ %>  
