@@ -302,15 +302,24 @@
             
             <!-- Add new comment section -->
             <label for="addComment">Add New Comment to: <h3><%= post.title%></h3></label>
-           
+            
             <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
-                
+              <% if(user !== null){ %>  
               <div class="form-group">
                 <textarea class="form-control" rows="4" name="comment[text]" placeholder="Type Here"></textarea>
-              </div>  
-              <div class="form-group">
-                  <button class="btn btn-md btn-info btn-block">Submit! </button>
               </div>
+                
+                <div class="form-group">
+                    <button class="btn btn-md btn-info btn-block">Submit! </button>
+                </div>
+              <% } else{ %>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="4" name="comment[text]" placeholder="Type Here" disabled></textarea>
+                  </div>
+                  <div class="alert alert-danger">
+                    <strong>You need to register or login to be able to post comments.</strong>
+                  </div> 
+              <% } %> 
             </form>
                 
           </div>
