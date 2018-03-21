@@ -20,6 +20,13 @@ router.get('/allposts', function (req, res) {
     }
   })
 })
+router.get('/profilepage', function (req, res) {
+  Post.find({}, function (err, allPosts){
+  	if (err) { console.log(err) } else {
+  		res.render('profilepage',{post: allPosts})
+    }
+  })
+})
 
 /*
 *   Post Question Endpoint
@@ -99,7 +106,7 @@ function checkPostOwnership (req, res, next) {
       if (err) {
         res.redirect('back')
       } else {
-        // check if pst belong to author
+        // check if post belong to author
         if (foundPost.author.id.equals(req.user._id)) { next() } else { // need better error message later
           res.redirect('back')
         }

@@ -1,6 +1,5 @@
-
-    <div class = "recent_posts"> <p> Some recent posts... </p></div>
-    <% post.reverse().forEach(function(post){ %>
+<div class = "recent_posts"> <p> Post History </p></div>
+    <% post.reverse().forEach(function(post){ if (post.author.username === user.username){%>
     <div class="col-sm-2">
       <div>
        <img src="https://cdn2.iconfinder.com/data/icons/lightly-icons/30/user-480.png" height="70" width="70" alt="Avatar" style = "margin-top:20px;">
@@ -16,4 +15,4 @@
       </div>
     </div>
 
-  <%  }); %>
+  <%  }}); %>
