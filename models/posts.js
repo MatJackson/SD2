@@ -8,7 +8,6 @@ var postSchema = mongoose.Schema({
     id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-
     },
     username: String
   },
