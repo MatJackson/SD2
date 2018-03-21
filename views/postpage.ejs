@@ -281,8 +281,9 @@
                       <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                         <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                       </form>
-                      <button onclick="hideAndSeek('<%= comment._id %>')">Edit</button>
-                        <div id="<%= comment._id %>" class="comments">
+                      <button id="editButtonComment">Edit</button>
+
+                        <div id="comment_id" class="comments">
                           <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                             <div>
                               <label style = "font-size: 10px;">Edit Comment</label>
@@ -292,6 +293,7 @@
                             <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
                           </form>
                         </div>
+
                         <% } %>
                     <hr>
                   <% } %>
@@ -334,18 +336,30 @@
   <% include footer %>
 
   <script>
-      function hideAndSeek(comment_id) {
-          var x = document.getElementById(comment_id);
-          if (x.style.display == "none") {
-              x.style.display = "block";
-          } else {
-              x.style.display = "none";
-          }
-      }
+      // function hideAndSeek() {
+      //     var x = document.getElementById('comment_id');
+      //     if (x.style.display == "none") {
+      //         x.style.display = "block";
+      //     } else {
+      //         x.style.display = "none";
+      //     }
+      // }
 
-      function hide(comment_id) {
-        document.getElementById(comment_id).style.display = "none";
-      }
+      // function hide(comment_id) {
+      //   document.getElementById(comment_id).style.display = "none";
+      // }
+      $(document).ready(function(){
+        $("#editButtonComment").click(function(){
+          if($("#comment_id").is(':hidden')==true){
+            $("#comment_id").show();
+
+          }
+          else{
+            $("#comment_id").hide();
+
+          }
+        });
+      });
       </script>
 
   </body>
