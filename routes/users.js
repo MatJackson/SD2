@@ -180,4 +180,9 @@ router.get('/logout', function (req, res) {
   res.redirect('/')
 })
 
+router.post('/color', function (req, res) {
+ 
+})
+
+
 module.exports = router

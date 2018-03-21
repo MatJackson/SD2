@@ -11,6 +11,9 @@ var UserSchema = mongoose.Schema({
   },
   email: {
     type: String
+  },
+  color: {
+    type: String
   }
 })
 
