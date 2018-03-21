@@ -14,18 +14,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-     <% if (loginmessage.length > 0) { %>
+     <% if (login_message.length > 0) { %>
       <script type="text/javascript">  
         $(document).ready(function(){
           $("#loginModal").modal('show');
+          $(".modal").on("hidden.bs.modal", function() {
+            $(".alert").html("");
+          });
         });
       </script>
     <% } %>
-    <% if (signupmessage.length > 0) { %>
+    <% if (signup_message.length > 0) { %>
       <script type="text/javascript">  
         $(document).ready(function(){
           showRegisterForm();
           $("#loginModal").modal('show');
+          $(".modal").on("hidden.bs.modal", function() {
+            $(".alert").html("");
+          });
         });
       </script>
     <% } %>
