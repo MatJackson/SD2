@@ -309,7 +309,6 @@
             <!-- Add new comment section -->
 
             <label for="addComment">Add New Comment to: <h4 class="wraptxt"><%= post.title%></h4></label>
-
             <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
               <% if(user !== null){ %>  
               <div class="form-group">
