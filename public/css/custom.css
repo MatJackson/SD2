@@ -34,6 +34,8 @@ textarea {
     font-size: 18px;
 }
 
+#profile_picture {width: 120px; height: 120px; margin-top: 50px;}
+#profile_name {text-align: left; margin-top: 70px;}
 
     footer {
       background-color: #555;
