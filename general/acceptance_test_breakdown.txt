@@ -1,0 +1,19 @@
+Last Update: 03-21-2018
+
+The following tests must be completed for every pull request.
+
+[ ] Create Account
+- [ ] test error prompts (empty fields, not a valid e-mail, non matching passwords)
+[ ] Login
+- [ ] test error prompts (empty fields, user doesn't exist, wrong password)
+[ ] user can successfully log out
+[ ] user can write a post
+- [ ] error prompts (no title, no text)
+[ ] user can edit his posts
+[ ] user can delete his posts
+[ ] user can comment on posts
+[ ] user can like/dislike a post, the options are mututally exclusive.
+[ ] user can delete comments
+[ ] OP can select the best answer, can also change what was the best answer
+[ ] user can search for posts by username, title, and post content
+[ ] user can navigate to the profile page
