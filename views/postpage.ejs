@@ -139,16 +139,17 @@
               <% } %>
               <%= comment.dislike %>
                 </a>
-              
-              <!-- show only if user owns the post -->
+              </div>
+
+              <div class="ui labeled button" tabindex="0">
+                 <!-- show only if user owns the post -->
               <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
-                <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
-                  Cancel Best Answer
+                <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui info button" >
+                  Drop Best Answer
                 </a>
               <% } %>
-            
-            </div>
-
+              </div>
+             
           </div>
         <% } %>
         <%})%>
@@ -200,29 +201,34 @@
                       <% } %>
                       <%= comment.dislike %>
                         </a>
-
+                      </div>
+                      
                       <!-- show only if user owns th post -->
                       <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
-                          Set As Best Answer
+                          Best Answer
                         </a>
-                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful">not helpful</a>
+                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful" class="ui info button">not helpful</a>
                       <% } %>
-                      </div>
+                      
 
                       <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
                         <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                           <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                         </form>
                         
-                        <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
-                          <div>
-                            <label style = "font-size: 18px;">Comment</label>
-                            <textarea class="form-control input-md" rows="4" name="comment"><%= comment.text %></textarea>
-                          </div>
-                          <br>
-                          <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
-                        </form>
+                        <button onclick="hideAndSeek('<%= comment._id %>')"class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" id="editButtonComment">Edit</button>
+                        <div id="<%= comment._id %>" style="display:none;">
+                          <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+                            <div>
+                              <label style = "font-size: 10px;">Edit Comment</label>
+                              <textarea class="form-control input-md" rows="4" name="comment"><%= comment.text %></textarea>
+                            </div>
+                            <br>
+                            <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
+                          </form>
+                        </div>
+
                         <% } %>
                       <hr>
                   </div>
@@ -265,25 +271,24 @@
                       <% } %>
                       <%= comment.dislike %>
                         </a>
-
+                      </div>
 
                       <!-- show only if user owns the post -->
                       <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
-                          Set As Best Answer
+                          Best Answer
                         </a>
                      
-                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful">not helpful</a>
+                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful" class="ui info button">not helpful</a>
                         <% } %>
-                      </div>
                       
                       <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
                       <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                         <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                       </form>
-                      
-                      <!-- <button onclick="hideAndSeek()">Edit </button>  -->
-                        <!-- <div id="edit"> -->
+
+                      <button onclick="hideAndSeek('<%= comment._id %>')"class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" id="editButtonComment">Edit</button>
+                        <div id="<%= comment._id %>" style="display:none;">
                           <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                             <div>
                               <label style = "font-size: 10px;">Edit Comment</label>
@@ -292,10 +297,8 @@
                             <br>
                             <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
                           </form>
-                        <!-- </div> -->
+                        </div>
                         <% } %>
-                          
-                        
                     <hr>
                   <% } %>
                  <% } %>
@@ -306,8 +309,6 @@
             <!-- Add new comment section -->
 
             <label for="addComment">Add New Comment to: <h4 class="wraptxt"><%= post.title%></h4></label>
-           
-
             <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
               <% if(user !== null){ %>  
               <div class="form-group">
@@ -337,14 +338,14 @@
   <% include footer %>
 
   <script>
-      function hideAndSeek() {
-          var x = document.getElementById("edit");
-          if (x.style.display === "none") {
+      function hideAndSeek(comment_id) {
+          var x = document.getElementById(comment_id);
+          if (x.style.display == "none") {
               x.style.display = "block";
           } else {
               x.style.display = "none";
           }
-      }
+      };
       </script>
 
   </body>
