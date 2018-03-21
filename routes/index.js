@@ -32,9 +32,13 @@ router.get('/allposts', function (req, res) {
   })
 })
 router.get('/profilepage', function (req, res) {
-  Post.find({}, function (err, allPosts){
-  	if (err) { console.log(err) } else {
-  		res.render('profilepage',{post: allPosts})
+  Post.find({}, function (err, allPosts) {
+    if (err) { console.log(err) } else {
+      res.render('profilepage', {
+        post: allPosts,
+        loginmessage: req.flash('loginMessage'),
+        signupmessage: req.flash('signupMessage')
+      })
     }
   })
 })
