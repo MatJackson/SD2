@@ -26,14 +26,13 @@
 <body>
 
 <% include navbar %>
-
-<% include login %>
   
 <div class="container text-center">
     <div class="row"> 
         <div class="col-sm-10">
             <div class="row">
                 <div class="text-left"> <p> <%= search %></p></div>
+                <!-- loops through all found posts and posts them in div -->
                 <% searchRes.forEach(function(post){ %>
                   <div class="col-sm-3">
                     <div class="well">
