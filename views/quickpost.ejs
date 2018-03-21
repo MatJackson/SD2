@@ -8,18 +8,33 @@
 
           <div class="collapse" id="entrypost">
             <form action="/post" method="POST">
-             
-              <div class="form-group">
-                <br>
-                <label style = "font-size: 18px;" >Title</label>
-                <input class="form-control input-lg" id="titlebox" type="text" placeholder="Question Title " name="title">
-              </div>
-              <div>
-                <label style = "font-size: 18px;" for="questionDescription">Description</label>
-                <textarea class="form-control input-lg" rows="5" placeholder="Enter description..." name="description"></textarea>
-              </div>
-              <br>
-              <button style="float:right;" type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
+              <% if(user !== null){ %>
+                <div class="form-group">
+                  <br>
+                    <label style = "font-size: 18px;" >Title</label>
+                    <input class="form-control input-lg" id="titlebox" type="text" placeholder="Question Title" name="title">
+                  </div>
+                  <div>
+                    <label style = "font-size: 18px;" for="questionDescription">Description</label>
+                    <textarea class="form-control input-lg" rows="5" placeholder="Enter description..." name="description"></textarea>
+                  </div>
+                  <br>
+                    <button id="quickPostSubmit" type="submit" value="submit" class="submit-post btn btn-primary" style="float:right;">Submit</button>
+                <% } else{ %>
+                  <div class="form-group">
+                      <br>
+                        <label style = "font-size: 18px;" >Title</label>
+                        <input class="form-control input-lg" id="titlebox" type="text" placeholder="Question Title" name="title" disabled>
+                      </div>
+                      <div>
+                        <label style = "font-size: 18px;" for="questionDescription">Description</label>
+                        <textarea class="form-control input-lg" rows="5" placeholder="Enter description..." name="description" disabled></textarea>
+                      </div>
+                      <br>
+                  <div class="alert alert-danger">
+                    <strong>You need to register or login to be able to post questions.</strong>
+                  </div> 
+                <% } %> 
             </form>
           </div>
         </div>

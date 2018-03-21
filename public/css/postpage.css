@@ -5,7 +5,7 @@
     word-wrap: break-word;
 }
 #notHelpful{
-    opacity:0.5;
+    opacity:0.2;
 }
 #notHelpful:hover{
     opacity:1;
