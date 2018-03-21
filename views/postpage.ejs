@@ -217,9 +217,8 @@
                           <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                         </form>
                         
-                        <button class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" id="editButtonComment">Edit</button>
-
-                        <div id="<%= comment._id %>" class="comments">
+                        <button onclick="hideAndSeek('<%= comment._id %>')"class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" id="editButtonComment">Edit</button>
+                        <div id="<%= comment._id %>" style="display:none;">
                           <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                             <div>
                               <label style = "font-size: 10px;">Edit Comment</label>
