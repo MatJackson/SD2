@@ -42,11 +42,11 @@
                 <p id="description" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"><%= post.description %></p>
                     
                 <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
-                    
+                  <!-- for delete  -->
                   <form id="delete-form" action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/?_method=DELETE" method="POST">
                     <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                   </form>
-
+                  <!-- for edit  -->
                   <a class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/edit">Edit</a>
                 
                 <% } %>
@@ -56,7 +56,7 @@
                     <a href="/post/<%= post._id %>/user/<%= user._id %>/<%= post.title %>/comments/like" class="ui green button">
                   <% } else{ %>
                     <a href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments/like" class="ui green button">
-                    <% } %>
+                  <% } %>
                     <i class="thumbs up icon"></i> Like
                     </a>
                   
