@@ -58,6 +58,7 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
         console.log('USER ID IS:' + votingArrayUserID)
         if (votingArrayUserID === userid) {
           foundUser = true
+
           if (votingArray[i].didLike) {
             console.log('1')
             Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
@@ -438,7 +439,7 @@ router.delete('/post/:postid/user/:userid/:title/comments/:commentid/', checkCom
         console.log('start:' + foundPost.comments)
         var commentsArray = foundPost.comments
         for (var i = 0; i < commentsArray.length; i++) {
-          if (req.params.commentid === commentsArray[i]) {
+          if (req.params.commentid === commentsArray[i].toString()) {
             var index = commentsArray.indexOf(req.params.commentid)
             commentsArray.splice(index, 1)
           }

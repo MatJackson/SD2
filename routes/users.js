@@ -79,7 +79,11 @@ router.post('/register', function (req, res) {
         var newUser = new User({
           username: username,
           email: email,
+<<<<<<< HEAD
           password: password, colour: "red"
+=======
+          password: password
+>>>>>>> b584b30db7848d579e468308636e5e115ff7930c
         })
 
         User.createUser(newUser, function (err, user) {
