@@ -439,7 +439,7 @@ router.delete('/post/:postid/user/:userid/:title/comments/:commentid/', checkCom
         console.log('start:' + foundPost.comments)
         var commentsArray = foundPost.comments
         for (var i = 0; i < commentsArray.length; i++) {
-          if (req.params.commentid === commentsArray[i]) {
+          if (req.params.commentid === commentsArray[i].toString()) {
             var index = commentsArray.indexOf(req.params.commentid)
             commentsArray.splice(index, 1)
           }
