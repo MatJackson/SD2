@@ -18,8 +18,9 @@
       <script type="text/javascript">  
         $(document).ready(function(){
           $("#loginModal").modal('show');
+          document.getElementById("login_error").style.display = "block";
           $(".modal").on("hidden.bs.modal", function() {
-            $(".alert").html("");
+            document.getElementById("login_error").style.display = "none";
           });
         });
       </script>
@@ -29,8 +30,9 @@
         $(document).ready(function(){
           showRegisterForm();
           $("#loginModal").modal('show');
+          document.getElementById("signup_error").style.display = "block";
           $(".modal").on("hidden.bs.modal", function() {
-            $(".alert").html("");
+            document.getElementById("signup_error").style.display = "none";
           });
         });
       </script>
