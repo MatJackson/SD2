@@ -1,0 +1,18 @@
+<!--this part is for Up Vote in Posts -->              
+<div class="ui labeled button" tabindex="0">
+  <% if(user !== null){ %>
+    <a href="/post/<%= post._id %>/user/<%= user._id %>/<%= post.title %>/comments/like" class="ui green button">
+    	<i class="thumbs up icon"></i> Like
+    </a>
+    <a href="/post/<%= post._id %>/user/<%= user._id %>/<%= post.title %>/comments/like" class="ui basic green left pointing label">
+    	<%= post.like %>
+    </a>
+  <% } else{ %>
+    <a href="#" class="ui green button">
+    	<i class="thumbs up icon"></i> Like
+    </a>
+    <a href="#" id="nonUser" class="ui basic green left pointing label">
+    	<%= post.like %>
+    </a>
+  <% } %>                  	                
+</div>
