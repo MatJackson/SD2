@@ -180,7 +180,7 @@
                         </a>
                       </div>
                       
-                      <!-- show only if user owns th post -->
+                      <!-- show only if user owns the post -->
                       <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
                           Best Answer
@@ -271,8 +271,9 @@
                               <label style = "font-size: 10px;">Edit Comment</label>
                               <textarea class="form-control input-md" rows="4" name="comment"><%= comment.text %></textarea>
                             </div>
-                            <br>
-                            <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
+                            <div style="margin:7.5px -0.5px">
+                              <button type="submit" value="submit" class="btn-xs submit-post btn btn-primary" style="top:5px;">Submit</button>
+                            </div>
                           </form>
                         </div>
                         <% } %>
@@ -289,7 +290,8 @@
             <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
               <% if(user !== null){ %>  
               <div class="form-group">
-                <textarea class="form-control" rows="4" name="comment[text]" placeholder="Type Here"></textarea>
+                <textarea class="form-control" rows="4" name="comment[text]" placeholder="Type Here" required='' oninvalid="this.setCustomValidity('Please enter your comment!')"
+                oninput="setCustomValidity('')"></textarea>
               </div>
                 
                 <div class="form-group">
