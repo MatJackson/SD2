@@ -1,7 +1,19 @@
 
     <div class = "recent_posts"> <p> Some recent posts... </p></div>
     <% post.reverse().forEach(function(post){ %>
-    <div class="col-sm-2">
+      <% if((currentUser.colour) === "green"){ %>
+        <div class="col-sm-2" id = "green" >
+  
+      <% } else { if((CurrentUser.colour) === "red"){ %>
+        <div class="col-sm-2" id = "red" >
+  
+      <% } else {if((CurrentUser.colour) === "blue"){ %>
+        <div class="col-sm-2" id = "blue" >
+          
+      <% } else{ %>
+        <div class="col-sm-2" id = "yellow" >
+       <% } }}%>
+    
       <div>
        <img src="https://cdn2.iconfinder.com/data/icons/lightly-icons/30/user-480.png" height="70" width="70" alt="Avatar" style = "margin-top:20px;">
        <p><%= post.author.username %></p>

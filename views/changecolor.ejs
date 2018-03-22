@@ -14,12 +14,13 @@
             <h4 class="modal-title">Change Color</h4>
           </div>
           <div class="modal-body">
-            <form action="/color" method="POST">
+            
             <p>Pick a color that reflects your personality</p>
-            <button class = "dot" id="red" type = "submit"></button>
-            <button class = "dot" id="blue" type = "submit"></button>
-            <button class = "dot" id="yellow" type = "submit"></button>
-            <button class = "dot" id="green" type = "submit"></button> </form>
+            <form action="users/colour" method="POST">
+            <button class = "dot" id="red" name="red" > </button>
+            <button class = "dot" id="blue" name="blue"  ></button>
+            <button class = "dot" id="yellow"  name="yellow" ></button>
+            <button class = "dot" id="green"  name="green"  ></button> </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

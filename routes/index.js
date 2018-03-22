@@ -40,7 +40,8 @@ router.post('/post', isLoggedIn, function (req, res) {
     description: req.body.description,
     author: {
       username: req.user.username, // to be changed
-      id: req.user._id // to be changed
+      id: req.user._id, // to be changed
+      colour: req.user.colour
     },
     comments: [],
     upvotes: 0,

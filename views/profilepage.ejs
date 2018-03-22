@@ -13,6 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
+
 </head>
 
 <body>
@@ -24,7 +25,21 @@
 <div class="container text-center">    
   <div class = "row">
     <div class = "col-sm-2"> </div>
-    <div class = "col-sm-8" style = "position: relative; background-color:rgba(230,254,250,1); height: 200px;">
+
+    
+    <% if(currentUser.colour === "green"){ %>
+      <div class = "col-sm-8" id = "green" >
+
+    <% } else { if(currentUser.colour === "red"){ %>
+      <div class = "col-sm-8" id = "red" >
+
+    <% } else {if(currentUser.colour === "blue"){ %>
+      <div class = "col-sm-8" id = "blue" >
+        
+    <% } else{ %>
+      <div class = "col-sm-8" id = "yellow" >
+     <% } }}%>
+
         <div class="col-sm-2">
           <div id = "profile_picture" class = "well" > <img src="https://cdn2.iconfinder.com/data/icons/lightly-icons/30/user-480.png" height="70" width="70" alt="Avatar" style = "margin-top:20px;">
           </div>
@@ -33,12 +48,14 @@
         <div class="col-sm-9">
           <div id = "profile_name" >
               <h1 > <%= user.username %> </h1> 
-              <p> About me.... Write something interesting about yourself!</p>
               <% include changecolor %>
             </div>
         </div>
       </div>
   </div>
+
+
+
   <br>
   <div class="row"> 
     <div class = "col-sm-2"> </div>

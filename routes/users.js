@@ -79,7 +79,7 @@ router.post('/register', function (req, res) {
         var newUser = new User({
           username: username,
           email: email,
-          password: password
+          password: password, colour: "red"
         })
 
         User.createUser(newUser, function (err, user) {
@@ -180,8 +180,32 @@ router.get('/logout', function (req, res) {
   res.redirect('/')
 })
 
-router.post('/color', function (req, res) {
- 
+router.post('/colour/', function (req, res) {
+
+  if(req.body.hasOwnProperty("yellow")){
+    var col = "yellow"
+  }
+  else if(req.body.hasOwnProperty("red")){
+    var col = "red"
+  }
+  else if(req.body.hasOwnProperty("green")){
+    var col = "green"
+  }
+  else {
+    var col = "blue"
+  }
+
+
+  User.findOneAndUpdate(
+    { "username" : req.user.username },
+    { $set: { "colour" : col }} , 
+    {new: true},
+    function(err, doc)
+     {if (err) { console.log(err); }  
+
+});
+
+ res.redirect('/profilepage')
 })
 
 

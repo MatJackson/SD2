@@ -44,19 +44,19 @@ textarea {
   }
 
 #blue {
-    background-color: blue;
+    background-color: #A3DDFE;
 }
 
 #red {
-    background-color: red;
+    background-color: #FE9595;
 }
 
 #yellow {
-    background-color: yellow;
+    background-color: #FBF48C;
 }
 
 #green {
-    background-color: green;
+    background-color: #97C7A1;
 }
 
 #profile_picture {width: 120px; height: 120px; margin-top: 50px;}
