@@ -1,29 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
 
-  <title>Metis</title>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.4/semantic.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/custom.css">
-  <link rel="stylesheet" type="text/css" href="/css/login.css">
-  <link rel="stylesheet" type="text/css" href="/css/postpage.css">
-  
-  <script src="login.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</head>
-
-<body>
-
-  <% include navbar %>
-
-  <% include login %>
+  <% include header %>
   
   <div class="container">    
 
@@ -203,7 +180,7 @@
                         </a>
                       </div>
                       
-                      <!-- show only if user owns th post -->
+                      <!-- show only if user owns the post -->
                       <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
                         <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
                           Best Answer
@@ -294,8 +271,9 @@
                               <label style = "font-size: 10px;">Edit Comment</label>
                               <textarea class="form-control input-md" rows="4" name="comment"><%= comment.text %></textarea>
                             </div>
-                            <br>
-                            <button type="submit" value="submit" class="submit-post btn btn-primary">Submit</button>
+                            <div style="margin:7.5px -0.5px">
+                              <button type="submit" value="submit" class="btn-xs submit-post btn btn-primary" style="top:5px;">Submit</button>
+                            </div>
                           </form>
                         </div>
                         <% } %>
@@ -312,7 +290,8 @@
             <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
               <% if(user !== null){ %>  
               <div class="form-group">
-                <textarea class="form-control" rows="4" name="comment[text]" placeholder="Type Here"></textarea>
+                <textarea class="form-control" rows="4" name="comment[text]" placeholder="Type Here" required='' oninvalid="this.setCustomValidity('Please enter your comment!')"
+                oninput="setCustomValidity('')"></textarea>
               </div>
                 
                 <div class="form-group">
