@@ -17,7 +17,6 @@ var commentSchema = mongoose.Schema(
       type: Number,
       default: 0
     },
-
     voteArray: [{
       userID: {
         type: String

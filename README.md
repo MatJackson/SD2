@@ -13,13 +13,15 @@ The site will provide users with the ability to search, post and reply to questi
 * Zhen Yee
 * Andrew McNair
 
-
 ## Technologies
   * Bootstrap v3.3.7
   * Node.js v8.9.4LTS
   * Express v4.16.0
   * MongoDB v3.6
   * Mongoose v5.0.2
+  
+## Coding Style Conventions
+ * [JavaScript Standard Style](https://standardjs.com/rules.html)
   
 ## References
 * Template for home page: https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_temp_social&stacked=h

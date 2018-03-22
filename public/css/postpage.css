@@ -5,7 +5,7 @@
     word-wrap: break-word;
 }
 #notHelpful{
-    opacity:0.5;
+    opacity:0.2;
 }
 #notHelpful:hover{
     opacity:1;
@@ -19,4 +19,7 @@ footer {
 
 .container{
     margin-top: 7.0em;
+}
+.wraptxt{
+    word-wrap: break-word;
 }

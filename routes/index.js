@@ -3,23 +3,27 @@ var router = express.Router()
 var mongoose = require('mongoose')
 var Post = require('../models/posts')
 var datetime = require('node-datetime')
-
 /*
 *   Homepage Endpoint
 */
 router.get('/', function (req, res) {
-  Post.find({}, function (err, index) {
-    if (err) { console.log(err) } else {
-      res.render('index', {post: index})
-    }
+  Post.find({}, function (err, allPosts) {
+    if (err) throw err
+    res.render('index', {post: allPosts})
   })
 })
 
 router.get('/allposts', function (req, res) {
   Post.find({}, function (err, allPosts) {
-    if (err) console.log(err)
-    else {
+    if (err) { console.log(err) } else {
       res.render('allposts', {post: allPosts})
+    }
+  })
+})
+router.get('/profilepage', function (req, res) {
+  Post.find({}, function (err, allPosts){
+  	if (err) { console.log(err) } else {
+  		res.render('profilepage',{post: allPosts})
     }
   })
 })
@@ -27,7 +31,6 @@ router.get('/allposts', function (req, res) {
 /*
 *   Post Question Endpoint
 */
-
 router.post('/post', isLoggedIn, function (req, res) {
   var currentDate = datetime.create()
   var formattedDate = currentDate.format('Y-m-d H:M:S')
@@ -45,11 +48,9 @@ router.post('/post', isLoggedIn, function (req, res) {
   })
 
   post.save()
-
   // redirect post to postpage with specific url
   res.redirect(`/post/${post._id}/user/${post.author.id}/${post.title}`)
 })
-
 // GET ROUTE
 router.get('/post/:postid/user/:userid/:title', function (req, res) {
   // Find post in DB using the id
@@ -63,14 +64,13 @@ router.get('/post/:postid/user/:userid/:title', function (req, res) {
     }
   })
 })
-
 // EDIT ROUTE
 router.get('/post/:postid/user/:userid/:title/edit', checkPostOwnership, function (req, res) {
   Post.findById(req.params.postid, function (err, foundPost) {
+    if (err) throw err
     res.render('editPost', {post: foundPost})
   })
 })
-
 // UPDATE ROUTE
 router.put('/post/:postid/user/:userid/:title', checkPostOwnership, function (req, res) {
   Post.findByIdAndUpdate(req.params.postid, req.body.post, function (err, updatedPost) {
@@ -81,7 +81,6 @@ router.put('/post/:postid/user/:userid/:title', checkPostOwnership, function (re
     }
   })
 })
-
 // DELETE ROUTE
 router.delete('/post/:postid/user/:userid/:title', checkPostOwnership, function (req, res) {
   Post.findByIdAndRemove(req.params.postid, function (err) {
@@ -107,7 +106,7 @@ function checkPostOwnership (req, res, next) {
       if (err) {
         res.redirect('back')
       } else {
-        // check if pst belong to author
+        // check if post belong to author
         if (foundPost.author.id.equals(req.user._id)) { next() } else { // need better error message later
           res.redirect('back')
         }
