@@ -1,13 +1,13 @@
 
     <div class = "recent_posts"> <p> Some recent posts... </p></div>
     <% post.reverse().forEach(function(post){ %>
-      <% if((currentUser.colour) === "green"){ %>
+      <% if((post.author.colour) === "green"){ %>
         <div class="col-sm-2" id = "green" >
   
-      <% } else { if((CurrentUser.colour) === "red"){ %>
+      <% } else { if((post.author.colour) === "red"){ %>
         <div class="col-sm-2" id = "red" >
   
-      <% } else {if((CurrentUser.colour) === "blue"){ %>
+      <% } else {if((post.author.colour) === "blue"){ %>
         <div class="col-sm-2" id = "blue" >
           
       <% } else{ %>
