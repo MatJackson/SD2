@@ -180,33 +180,4 @@ router.get('/logout', function (req, res) {
   res.redirect('/')
 })
 
-router.post('/colour/', function (req, res) {
-
-  if(req.body.hasOwnProperty("yellow")){
-    var col = "yellow"
-  }
-  else if(req.body.hasOwnProperty("red")){
-    var col = "red"
-  }
-  else if(req.body.hasOwnProperty("green")){
-    var col = "green"
-  }
-  else {
-    var col = "blue"
-  }
-
-
-  User.findOneAndUpdate(
-    { "username" : req.user.username },
-    { $set: { "colour" : col }} , 
-    {new: true},
-    function(err, doc)
-     {if (err) { console.log(err); }  
-
-});
-
- res.redirect('/profilepage')
-})
-
-
 module.exports = router
