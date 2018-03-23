@@ -19,23 +19,26 @@ passport.deserializeUser(function (id, done) {
 //register
 passport.use('local-signup', new LocalStrategy({passReqToCallback: true},
   function (req, username, password, done) {
-    if (err) return done(err)
-    if (user) {
-      return done(null, false, req.flash('signupMessage', 'Username already in use'))
-    } else {
-      var newUser = new User({
-        username: username,
-        email: req.email,
-        password: password
-      })
-      User.createUser(newUser, function (err, user) {
-        if (err) console.log(err)
-      })
-      req.login(newUser, function (err) {
-        if (err) throw err
-      })
-      return done(null, newUser)
-    }
+    User.getUserByUsername(username, function (err, user) {
+      if (err) return done(err)
+      if (user) {
+        return done(null, false, req.flash('signupMessage', 'Username already in use'))
+      } else {
+        console.log('ding');
+        var newUser = new User({
+          username: username,
+          email: req.email,
+          password: password
+        })
+        User.createUser(newUser, function (err, user) {
+          if (err) console.log(err)
+        })
+        req.login(newUser, function (err) {
+          if (err) throw err
+        })
+        return done(null, newUser)
+      }
+    })
   }
 ))
 
@@ -49,7 +52,6 @@ router.post('/register', function (req, res) {
   req.checkBody('email', 'Email is not valid').isEmail()
   req.checkBody('password', 'Password is required').notEmpty()
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password)
-
   var errors = req.validationErrors()
   if (errors) {
     req.flash('signupMessage', errors[0].msg)
