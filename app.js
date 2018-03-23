@@ -92,6 +92,8 @@ app.use(flash())
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg')
   res.locals.error_msg = req.flash('error_msg')
+  res.locals.login_message = req.flash('loginMessage')
+  res.locals.signup_message = req.flash('signupMessage')
   res.locals.error = req.flash('error') // for passport
   res.locals.user = req.user || null // track if user logged in/out
   next()

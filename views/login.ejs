@@ -3,12 +3,25 @@
         <div class="modal-content">
            <div class="modal-header">
               <button type="button" class="close" data-keyboard="true" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">Login</h4>
+              <h4 class="modal-title">Login</h4>     
           </div>
-          <div class="modal-body">  
+          <div class="modal-body"> 
               <div class="box">
                    <div class="content">
-                      <div class="error"></div>
+                      <!-- <div class="social">
+                          <a id="facebook_login" class="circle facebook" href="/auth/facebook">
+                              <i class="fa fa-facebook fa-fw"></i>
+                          </a>
+                      </div> 
+                      <div class="division">
+                          <div class="line l"></div>
+                            <span>or</span>
+                          <div class="line r"></div>
+                      </div> -->
+                      
+                      <div id="login_error" style="display:none;" class="alert alert-danger"><%= login_message %></div>
+                      <div id="signup_error" style="display:none;" class="alert alert-danger"><%= signup_message %></div>
+                      
                       <div class="form loginBox">
                           <form method="post" action="/users/login" accept-charset="UTF-8">
                           <input id="username" class="form-control" type="text" placeholder="Username" name="username">
