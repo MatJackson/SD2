@@ -11,29 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-     <% if (login_message.length > 0) { %>
-      <script type="text/javascript">  
-        $(document).ready(function(){
-          $("#loginModal").modal('show');
-          document.getElementById("login_error").style.display = "block";
-          $(".modal").on("hidden.bs.modal", function() {
-            document.getElementById("login_error").style.display = "none";
-          });
-        });
-      </script>
-    <% } %>
-    <% if (signup_message.length > 0) { %>
-      <script type="text/javascript">  
-        $(document).ready(function(){
-          showRegisterForm();
-          $("#loginModal").modal('show');
-          document.getElementById("signup_error").style.display = "block";
-          $(".modal").on("hidden.bs.modal", function() {
-            document.getElementById("signup_error").style.display = "none";
-          });
-        });
-      </script>
-    <% } %>
+    
 
   </head>
 
