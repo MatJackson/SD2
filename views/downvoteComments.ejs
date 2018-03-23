@@ -1,0 +1,18 @@
+<!--this part is for Down Vote in Comments -->
+<div class="ui labeled button" tabindex="0">
+    <% if(user !== null){ %>
+        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui red button">
+       		<i class="thumbs down icon"></i> Dislike
+        </a>
+        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/dislike" class="ui basic red left pointing label">
+           	<%= comment.dislike %>
+        </a>
+    <% } else{ %>
+        <a href="#" class="ui red button">
+       		<i class="thumbs down icon"></i> Dislike
+        </a>
+        <a href="#" class="ui basic red left pointing label">
+           	<%= comment.dislike %>
+        </a>
+    <% } %>  
+</div>
