@@ -14,7 +14,7 @@
          <% for(var i = 0; i<3; i++){
            %>
         <div class="well">
-          <a href="/post/<%= post[i]._id %>/user/<%= post[i].author.id %>/<%= post[i].title %>" class="wraptxt"> <h5><%= post[i].title %></h5> </a>
+          <a href="/post/<%= post[i]._id %>/user/<%= post[i].author.id %>" class="wraptxt"> <h5><%= post[i].title %></h5> </a>
         </div>
         
         <%  } %>  

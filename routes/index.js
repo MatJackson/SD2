@@ -34,7 +34,7 @@ router.get('/profilepage', function (req, res) {
 router.post('/post', isLoggedIn, function (req, res) {
   var currentDate = datetime.create()
   var formattedDate = currentDate.format('Y-m-d H:M:S')
-
+  console.log(req.body.title)
   var post = new Post({
     title: req.body.title,
     description: req.body.description,
@@ -49,10 +49,10 @@ router.post('/post', isLoggedIn, function (req, res) {
 
   post.save()
   // redirect post to postpage with specific url
-  res.redirect(`/post/${post._id}/user/${post.author.id}/${post.title}`)
+  res.redirect(`/post/${post._id}/user/${post.author.id}`)
 })
 // GET ROUTE
-router.get('/post/:postid/user/:userid/:title', function (req, res) {
+router.get('/post/:postid/user/:userid', function (req, res) {
   // Find post in DB using the id
   Post.findById(req.params.postid).populate('comments').exec(function (err, foundPost) {
     if (err) { // if post id is not found
@@ -65,24 +65,27 @@ router.get('/post/:postid/user/:userid/:title', function (req, res) {
   })
 })
 // EDIT ROUTE
-router.get('/post/:postid/user/:userid/:title/edit', checkPostOwnership, function (req, res) {
+router.get('/post/:postid/user/:userid/edit', checkPostOwnership, function (req, res) {
+  console.log("this is edit route " + req.params)
   Post.findById(req.params.postid, function (err, foundPost) {
     if (err) throw err
     res.render('editPost', {post: foundPost})
   })
 })
 // UPDATE ROUTE
-router.put('/post/:postid/user/:userid/:title', checkPostOwnership, function (req, res) {
+router.put('/post/:postid/user/:userid', checkPostOwnership, function (req, res) {
+  console.log("this is update route " + req.params)
   Post.findByIdAndUpdate(req.params.postid, req.body.post, function (err, updatedPost) {
     if (err) {
       res.redirect('/')
     } else {
-      res.redirect('/post/' + updatedPost._id + '/user/' + updatedPost.author.id + '/' + updatedPost.title)
+      console.log(updatedPost.title)
+      res.redirect('/post/' + updatedPost._id + '/user/' + updatedPost.author.id)
     }
   })
 })
 // DELETE ROUTE
-router.delete('/post/:postid/user/:userid/:title', checkPostOwnership, function (req, res) {
+router.delete('/post/:postid/user/:userid', checkPostOwnership, function (req, res) {
   Post.findByIdAndRemove(req.params.postid, function (err) {
     // need better statements after if-else, temporary for now
     if (err) {
