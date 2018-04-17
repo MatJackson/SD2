@@ -6,21 +6,6 @@ var LocalStrategy = require('passport-local').Strategy
 var User = require('../models/user')
 var bcrypt = require('bcryptjs')
 
-// Register
-router.get('/register', function (req, res) {
-  res.render('index')
-})
-
-// Login
-router.get('/login', function (req, res) {
-  res.render('index')
-})
-
-// Forgot Password
-router.get('/forgotpassword', function (req, res) {
-  res.render('index')
-})
-
 passport.serializeUser(function (user, done) {
   done(null, user.id)
 })
@@ -31,81 +16,98 @@ passport.deserializeUser(function (id, done) {
   })
 })
 
-// Passport Configuration
-passport.use(new LocalStrategy(
-  function (username, password, done) {
+//register
+passport.use('local-signup', new LocalStrategy({passReqToCallback: true},
+  function (req, username, password, done) {
     User.getUserByUsername(username, function (err, user) {
-      if (err) throw err
-      if (!user) {
-        return done(null, false, {message: 'Unknown User'})
+      if (err) return done(err)
+      if (user) {
+        return done(null, false, req.flash('signupMessage', 'Username already in use'))
+      } else {
+        console.log('ding');
+        var newUser = new User({
+          username: username,
+          email: req.email,
+          password: password
+        })
+        User.createUser(newUser, function (err, user) {
+          if (err) console.log(err)
+        })
+        req.login(newUser, function (err) {
+          if (err) throw err
+        })
+        return done(null, newUser)
       }
-
-      User.comparePassword(password, user.password, function (err, isMatch) {
-        if (err) throw err
-        if (isMatch) {
-          return done(null, user)
-        } else {
-          return done(null, false, {message: 'Invalid password'})
-        }
-      })
     })
-  })
-)
+  }
+))
 
-// Register User
+router.get('/register', function (req, res) {
+  res.render('index')
+})
+
 router.post('/register', function (req, res) {
-  var username = req.body.username
-  var email = req.body.email
-  var password = req.body.password
-  var password2 = req.body.password2
-
-  // Validation
   req.checkBody('username', 'Username is required').notEmpty()
   req.checkBody('email', 'Email is required').notEmpty()
   req.checkBody('email', 'Email is not valid').isEmail()
   req.checkBody('password', 'Password is required').notEmpty()
   req.checkBody('password2', 'Passwords do not match').equals(req.body.password)
+  var errors = req.validationErrors()
+  if (errors) {
+    req.flash('signupMessage', errors[0].msg)
+    res.redirect('/')
+  } else {
+    passport.authenticate('local-signup', {
+      successRedirect: '/',
+      failureRedirect: '/',
+      failureFlash: true
+    })(req, res)
+  }
+})
 
-  var errors = req.validationErrors() // deprecated, find new way
+//login
+passport.use('local-login', new LocalStrategy({passReqToCallback: true},
+  function (req, username, password, done) {
+    User.getUserByUsername(username, function (err, user) {
+      if (err) return done(err)
+      if (!user) return done(null, false, req.flash('loginMessage', 'No user found.'))
+       User.comparePassword(password, user.password, function (err, isMatch) {
+         if (err) throw err
+         if (isMatch) {
+           return done(null, user)
+         } else {
+           return done(null, false, req.flash('loginMessage', 'Invalid password'))
+         }
+       })
+     })
+  }
+))
 
-  User.findOne({username: username}, function (err, user) {
-    if (err) { console.log(err) } else {
-      if (errors) {
-        // shakeModal();
-        // res.render('index', {
-        //     errors:errors
-        // });
-      } else if (!user) {
-        var newUser = new User({
-          username: username,
-          email: email,
-          password: password
-        })
+router.get('/login', function (req, res) {
+  res.render('index')
+})
 
-        User.createUser(newUser, function (err, user) {
-          if (err) {
-            console.log(err)
-          }
-          // throw err;
-          console.log(user.username + ' created')
-        })
-
-        req.flash('success_msg', 'You have successfully registered an account')
-
-        // Logs in user after successfull registration
-        req.login(newUser, function (err) {
-          if (err) throw err
-          res.redirect('/')
-        })
-      } else {
-        console.log(username + ' already exists.')
-        res.redirect('/')
-      }
-    }
-  })
+router.post('/login', function (req, res) {
+   req.checkBody('username', 'Username is required').notEmpty()
+   req.checkBody('password', 'Password is required').notEmpty()
+   var errors = req.validationErrors()
+   if (errors) {
+     req.flash('loginMessage', errors[0].msg)
+     res.redirect('/')
+   } else {
+     passport.authenticate('local-login', {
+       successRedirect: '/',
+       failureRedirect: '/',
+       failureFlash: true
+     })(req, res)
+   }
 })
 
 // Forgot Password
+router.get('/forgotpassword', function (req, res) {
+  res.render('index')
+})
+
 router.post('/forgotpassword', function (req, res) {
   var username = req.body.username
   var email = req.body.email
