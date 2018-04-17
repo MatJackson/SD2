@@ -18,9 +18,9 @@ var methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
 // REQUIRE MODELS
-var Comment = require('./models/comment')
-var Post = require('./models/posts')
-var User = require('./models/user')
+var comment = require('./models/comment')
+var post = require('./models/posts')
+var user = require('./models/user')
 
 mongoose.connect('mongodb://localhost/db2')
 var db = mongoose.connection

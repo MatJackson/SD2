@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 var mongoose = require('mongoose')
 var Post = require('../models/posts')
-var datetime = require('node-datetime')
+var dateTime = require('node-datetime')
 /*
 *   Homepage Endpoint
 */
@@ -32,7 +32,7 @@ router.get('/profilepage', function (req, res) {
 *   Post Question Endpoint
 */
 router.post('/post', isLoggedIn, function (req, res) {
-  var currentDate = datetime.create()
+  var currentDate = dateTime.create()
   var formattedDate = currentDate.format('Y-m-d H:M:S')
 
   var post = new Post({

@@ -10,8 +10,8 @@ var datetime = require('node-datetime')
 
 // COMMENTS CREATE ROUTE
 
-router.post('/post/:postid/user/:userid/:title/comments', isLoggedIn, function (req, res) {
-  Post.findById(req.params.postid, function (err, post) {
+router.post('/post/:postId/user/:userId/:title/comments', isLoggedIn, function (req, res) {
+  Post.findById(req.params.postId, function (err, post) {
     if (err) {
       console.log(err)
       // error message for time being
@@ -31,70 +31,70 @@ router.post('/post/:postid/user/:userid/:title/comments', isLoggedIn, function (
           comment.save()
           post.comments.push(comment._id)
           post.save()
-          res.redirect('/post/' + post._id + '/user/' + req.params.userid + '/' + post.title)
+          res.redirect('/post/' + post._id + '/user/' + req.params.userId + '/' + post.title)
         }
       })
     }
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, function (req, res) {
-  var postid = req.params.postid
-  var userid = req.params.userid
+router.get('/post/:postId/user/:userId/:title/comments/like', isLoggedIn, function (req, res) {
+  var postId = req.params.postId
+  var userId = req.params.userId
   var title = req.params.title
 
-  console.log('Current User ' + userid)
+  console.log('Current User ' + userId)
 
-  Post.findById(postid, function (err, post) {
+  Post.findById(postId, function (err, post) {
     if (err) {
       console.log(err)
     } else {
-      var query = { _id: postid }
+      var query = { _id: postId }
       var votingArray = post.voteArray
       console.log(votingArray)
       var foundUser = false
       for (var i = 0; i < votingArray.length; i++) {
         var votingArrayUserID = votingArray[i].userID
         console.log('USER ID IS:' + votingArrayUserID)
-        if (votingArrayUserID === userid) {
+        if (votingArrayUserID === userId) {
           foundUser = true
 
           if (votingArray[i].didLike) {
             console.log('1')
-            Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
+            Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userId } }, {upsert: true}, function (err, post) { if (err) throw err })
 
-            Post.findByIdAndUpdate(postid, {$inc: {like: -1}}, function (err, post) {
+            Post.findByIdAndUpdate(postId, {$inc: {like: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           } else if (!votingArray[i].didLike && !votingArray[i].didDislike) {
             console.log('2')
-            Post.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userid } }, {upsert: false}, function (err, post) { if (err) throw err })
+            Post.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userId } }, {upsert: false}, function (err, post) { if (err) throw err })
 
-            Post.findByIdAndUpdate(postid, {$inc: {like: 1}}, function (err, post) {
+            Post.findByIdAndUpdate(postId, {$inc: {like: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           } else if (!votingArray[i].didLike && votingArray[i].didDislike) {
             console.log('3')
-            Post.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userid } }, {upsert: false}, function (err, post) { if (err) throw err })
+            Post.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userId } }, {upsert: false}, function (err, post) { if (err) throw err })
 
-            Post.findByIdAndUpdate(postid, {$inc: {dislike: -1}}, function (err, post) {
+            Post.findByIdAndUpdate(postId, {$inc: {dislike: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
-            Post.findByIdAndUpdate(postid, {$inc: {like: 1}}, function (err, post) {
+            Post.findByIdAndUpdate(postId, {$inc: {like: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           }
@@ -103,13 +103,13 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
       }
       if (!foundUser) {
         console.log('4')
-        Post.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
+        Post.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userId } }, {upsert: true}, function (err, post) { if (err) throw err })
 
-        Post.findByIdAndUpdate(postid, {$inc: {like: 1}}, function (err, post) {
+        Post.findByIdAndUpdate(postId, {$inc: {like: 1}}, function (err, post) {
           if (err) {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
           } else {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
           }
         })
       }
@@ -117,62 +117,62 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, function (req, res) {
-  var postid = req.params.postid
-  var userid = req.params.userid
+router.get('/post/:postId/user/:userId/:title/comments/dislike', isLoggedIn, function (req, res) {
+  var postId = req.params.postId
+  var userId = req.params.userId
   var title = req.params.title
 
-  console.log('Current User ' + userid)
+  console.log('Current User ' + userId)
 
-  Post.findById(postid, function (err, post) {
+  Post.findById(postId, function (err, post) {
     if (err) {
       console.log(err)
     } else {
-      var query = { _id: postid }
+      var query = { _id: postId }
       var votingArray = post.voteArray
       console.log(votingArray)
       var foundUser = false
       for (var i = 0; i < votingArray.length; i++) {
         var votingArrayUserID = votingArray[i].userID
         console.log('USER ID IS:' + votingArrayUserID)
-        if (votingArrayUserID === userid) {
+        if (votingArrayUserID === userId) {
           foundUser = true
           if (votingArray[i].didDislike) {
             console.log('1')
-            Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
+            Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userId } }, {upsert: true}, function (err, post) { if (err) throw err })
 
-            Post.findByIdAndUpdate(postid, {$inc: {dislike: -1}}, function (err, post) {
+            Post.findByIdAndUpdate(postId, {$inc: {dislike: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           } else if (!votingArray[i].didLike && !votingArray[i].didDislike) {
             console.log('2')
-            Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userid } }, {upsert: false}, function (err, post) { if (err) throw err })
+            Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userId } }, {upsert: false}, function (err, post) { if (err) throw err })
 
-            Post.findByIdAndUpdate(postid, {$inc: {dislike: 1}}, function (err, post) {
+            Post.findByIdAndUpdate(postId, {$inc: {dislike: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           } else if (!votingArray[i].didDislike && votingArray[i].didLike) {
             console.log('3')
-            Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userid } }, {upsert: false}, function (err, post) { if (err) throw err })
+            Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userId } }, {upsert: false}, function (err, post) { if (err) throw err })
 
-            Post.findByIdAndUpdate(postid, {$inc: {like: -1}}, function (err, post) {
+            Post.findByIdAndUpdate(postId, {$inc: {like: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
-            Post.findByIdAndUpdate(postid, {$inc: {dislike: 1}}, function (err, post) {
+            Post.findByIdAndUpdate(postId, {$inc: {dislike: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           }
@@ -181,13 +181,13 @@ router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, fun
       }
       if (!foundUser) {
         console.log('4')
-        Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
+        Post.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userId } }, {upsert: true}, function (err, post) { if (err) throw err })
 
-        Post.findByIdAndUpdate(postid, {$inc: {dislike: 1}}, function (err, post) {
+        Post.findByIdAndUpdate(postId, {$inc: {dislike: 1}}, function (err, post) {
           if (err) {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
           } else {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
           }
         })
       }
@@ -195,63 +195,63 @@ router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, fun
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLoggedIn, function (req, res) {
-  var postid = req.params.postid
-  var userid = req.params.userid
-  var commentid = req.params.commentid
+router.get('/post/:postId/user/:userId/:title/comments/:commentId/like', isLoggedIn, function (req, res) {
+  var postId = req.params.postId
+  var userId = req.params.userId
+  var commentId = req.params.commentId
   var title = req.params.title
 
-  console.log('Current User ' + userid)
+  console.log('Current User ' + userId)
 
-  Comment.findById(commentid, function (err, comment) {
+  Comment.findById(commentId, function (err, comment) {
     if (err) {
       console.log(err)
     } else {
-      var query = { _id: commentid }
+      var query = { _id: commentId }
       var votingArray = comment.voteArray
       console.log(votingArray)
       var foundUser = false
       for (var i = 0; i < votingArray.length; i++) {
         var votingArrayUserID = votingArray[i].userID
         console.log('USER ID IS:' + votingArrayUserID)
-        if (votingArrayUserID === userid) {
+        if (votingArrayUserID === userId) {
           foundUser = true
           if (votingArray[i].didLike) {
             console.log('1')
-            Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
+            Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userId } }, {upsert: true}, function (err, post) { if (err) throw err })
 
-            Comment.findByIdAndUpdate(commentid, {$inc: {like: -1}}, function (err, post) {
+            Comment.findByIdAndUpdate(commentId, {$inc: {like: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           } else if (!votingArray[i].didLike && !votingArray[i].didDislike) {
             console.log('2')
-            Comment.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userid } }, {upsert: false}, function (err, post) { if (err) throw err })
+            Comment.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userId } }, {upsert: false}, function (err, post) { if (err) throw err })
 
-            Comment.findByIdAndUpdate(commentid, {$inc: {like: 1}}, function (err, post) {
+            Comment.findByIdAndUpdate(commentId, {$inc: {like: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           } else if (!votingArray[i].didLike && votingArray[i].didDislike) {
             console.log('3')
-            Comment.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userid } }, {upsert: false}, function (err, post) { if (err) throw err })
+            Comment.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userId } }, {upsert: false}, function (err, post) { if (err) throw err })
 
-            Comment.findByIdAndUpdate(commentid, {$inc: {dislike: -1}}, function (err, post) {
+            Comment.findByIdAndUpdate(commentId, {$inc: {dislike: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
-            Comment.findByIdAndUpdate(commentid, {$inc: {like: 1}}, function (err, post) {
+            Comment.findByIdAndUpdate(commentId, {$inc: {like: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           }
@@ -260,13 +260,13 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLogge
       }
       if (!foundUser) {
         console.log('4')
-        Comment.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
+        Comment.findOneAndUpdate(query, { voteArray: { didLike: true, didDislike: false, userID: userId } }, {upsert: true}, function (err, post) { if (err) throw err })
 
-        Comment.findByIdAndUpdate(commentid, {$inc: {like: 1}}, function (err, post) {
+        Comment.findByIdAndUpdate(commentId, {$inc: {like: 1}}, function (err, post) {
           if (err) {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
           } else {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
           }
         })
       }
@@ -274,63 +274,63 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLogge
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLoggedIn, function (req, res) {
-  var postid = req.params.postid
-  var userid = req.params.userid
-  var commentid = req.params.commentid
+router.get('/post/:postId/user/:userId/:title/comments/:commentId/dislike', isLoggedIn, function (req, res) {
+  var postId = req.params.postId
+  var userId = req.params.userId
+  var commentId = req.params.commentId
   var title = req.params.title
 
-  console.log('Current User ' + userid)
+  console.log('Current User ' + userId)
 
-  Comment.findById(commentid, function (err, comment) {
+  Comment.findById(commentId, function (err, comment) {
     if (err) {
       console.log(err)
     } else {
-      var query = { _id: commentid }
+      var query = { _id: commentId }
       var votingArray = comment.voteArray
       console.log(votingArray)
       var foundUser = false
       for (var i = 0; i < votingArray.length; i++) {
         var votingArrayUserID = votingArray[i].userID
         console.log('USER ID IS:' + votingArrayUserID)
-        if (votingArrayUserID === userid) {
+        if (votingArrayUserID === userId) {
           foundUser = true
           if (votingArray[i].didDislike) {
             console.log('1')
-            Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
+            Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: false, userID: userId } }, {upsert: true}, function (err, post) { if (err) throw err })
 
-            Comment.findByIdAndUpdate(commentid, {$inc: {dislike: -1}}, function (err, post) {
+            Comment.findByIdAndUpdate(commentId, {$inc: {dislike: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           } else if (!votingArray[i].didLike && !votingArray[i].didDislike) {
             console.log('2')
-            Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userid } }, {upsert: false}, function (err, post) { if (err) throw err })
+            Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userId } }, {upsert: false}, function (err, post) { if (err) throw err })
 
-            Comment.findByIdAndUpdate(commentid, {$inc: {dislike: 1}}, function (err, post) {
+            Comment.findByIdAndUpdate(commentId, {$inc: {dislike: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           } else if (!votingArray[i].didDislike && votingArray[i].didLike) {
             console.log('3')
-            Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userid } }, {upsert: false}, function (err, post) { if (err) throw err })
+            Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userId } }, {upsert: false}, function (err, post) { if (err) throw err })
 
-            Comment.findByIdAndUpdate(commentid, {$inc: {like: -1}}, function (err, post) {
+            Comment.findByIdAndUpdate(commentId, {$inc: {like: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
-            Comment.findByIdAndUpdate(commentid, {$inc: {dislike: 1}}, function (err, post) {
+            Comment.findByIdAndUpdate(commentId, {$inc: {dislike: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
               }
             })
           }
@@ -339,13 +339,13 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLo
       }
       if (!foundUser) {
         console.log('4')
-        Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userid } }, {upsert: true}, function (err, post) { if (err) throw err })
+        Comment.findOneAndUpdate(query, { voteArray: { didLike: false, didDislike: true, userID: userId } }, {upsert: true}, function (err, post) { if (err) throw err })
 
-        Comment.findByIdAndUpdate(commentid, {$inc: {dislike: 1}}, function (err, post) {
+        Comment.findByIdAndUpdate(commentId, {$inc: {dislike: 1}}, function (err, post) {
           if (err) {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
           } else {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postId + '/user/' + userId + '/' + title)
           }
         })
       }
@@ -353,8 +353,8 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLo
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/:commentid/bestanswer', isLoggedIn, function (req, res) {
-  Post.findById(req.params.postid, function (err, post) {
+router.get('/post/:postId/user/:userId/:title/comments/:commentId/bestanswer', isLoggedIn, function (req, res) {
+  Post.findById(req.params.postId, function (err, post) {
     if (err) {
       console.log(err)
       // error message for time being
@@ -372,28 +372,28 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/bestanswer', i
           }
         })
       }
-      Comment.findByIdAndUpdate(req.params.commentid, {$set: {bestAnswer: true}}, function (err, comment) {
+      Comment.findByIdAndUpdate(req.params.commentId, {$set: {bestAnswer: true}}, function (err, comment) {
         if (err) {
           console.log(err)
         } else {
           comment.helpful = true
           comment.save()
           post.save()
-          res.redirect('/post/' + post._id + '/user/' + req.params.userid + '/' + post.title)
+          res.redirect('/post/' + post._id + '/user/' + req.params.userId + '/' + post.title)
         }
       })
     }
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/:commentid/nothelpful', isLoggedIn, function (req, res) {
-  Post.findById(req.params.postid, function (err, post) {
+router.get('/post/:postId/user/:userId/:title/comments/:commentId/nothelpful', isLoggedIn, function (req, res) {
+  Post.findById(req.params.postId, function (err, post) {
     if (err) {
       console.log(err)
       // error message for time being
       res.send('Cannot find post')
     } else {
-      Comment.findById(req.params.commentid, function (err, comment) {
+      Comment.findById(req.params.commentId, function (err, comment) {
         if (err) {
           console.log(err)
         } else {
@@ -409,38 +409,38 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/nothelpful', i
         }
       })
 
-      res.redirect('/post/' + post._id + '/user/' + req.params.userid + '/' + post.title)
+      res.redirect('/post/' + post._id + '/user/' + req.params.userId + '/' + post.title)
     }
   })
 })
 
 // UPDATE ROUTE
-router.put('/post/:postid/user/:userid/:title/comments/:commentid/', checkCommentOwnership, function (req, res) {
-  Comment.findByIdAndUpdate(req.params.commentid, {text: req.body.comment}, function (err, updatedComment) {
+router.put('/post/:postId/user/:userId/:title/comments/:commentId/', checkCommentOwnership, function (req, res) {
+  Comment.findByIdAndUpdate(req.params.commentId, {text: req.body.comment}, function (err, updatedComment) {
     if (err) {
       console.log(err)
       res.redirect('/')
     } else {
       updatedComment.save()
-      res.redirect('/post/' + req.params.postid + '/user/' + req.params.userid + '/' + req.params.title)
+      res.redirect('/post/' + req.params.postId + '/user/' + req.params.userId + '/' + req.params.title)
     }
   })
 })
 
 // DELETE ROUTE
-router.delete('/post/:postid/user/:userid/:title/comments/:commentid/', checkCommentOwnership, function (req, res) {
-  Comment.findByIdAndRemove(req.params.commentid, function (err) {
+router.delete('/post/:postId/user/:userId/:title/comments/:commentId/', checkCommentOwnership, function (req, res) {
+  Comment.findByIdAndRemove(req.params.commentId, function (err) {
     if (err) {
       console.log(err)
       res.redirect('/')
     } else {
-      Post.findById(req.params.postid, function (err, foundPost) {
+      Post.findById(req.params.postId, function (err, foundPost) {
         if (err) throw err
         console.log('start:' + foundPost.comments)
         var commentsArray = foundPost.comments
         for (var i = 0; i < commentsArray.length; i++) {
-          if (req.params.commentid === commentsArray[i].toString()) {
-            var index = commentsArray.indexOf(req.params.commentid)
+          if (req.params.commentId === commentsArray[i].toString()) {
+            var index = commentsArray.indexOf(req.params.commentId)
             commentsArray.splice(index, 1)
           }
         }
@@ -448,7 +448,7 @@ router.delete('/post/:postid/user/:userid/:title/comments/:commentid/', checkCom
         console.log(foundPost.comments)
       })
 
-      res.redirect('/post/' + req.params.postid + '/user/' + req.params.userid + '/' + req.params.title)
+      res.redirect('/post/' + req.params.postId + '/user/' + req.params.userId + '/' + req.params.title)
     }
   })
 })
@@ -463,7 +463,7 @@ function isLoggedIn (req, res, next) {
 }
 function checkCommentOwnership (req, res, next) {
   if (req.isAuthenticated()) {
-    Comment.findById(req.params.commentid, function (err, foundComment) {
+    Comment.findById(req.params.commentId, function (err, foundComment) {
       if (err) {
         res.redirect('back')
       } else {
