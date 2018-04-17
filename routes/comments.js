@@ -10,7 +10,7 @@ var datetime = require('node-datetime')
 
 // COMMENTS CREATE ROUTE
 
-router.post('/post/:postid/user/:userid/:title/comments', isLoggedIn, function (req, res) {
+router.post('/post/:postid/user/:userid/comments', isLoggedIn, function (req, res) {
   Post.findById(req.params.postid, function (err, post) {
     if (err) {
       console.log(err)
@@ -31,14 +31,14 @@ router.post('/post/:postid/user/:userid/:title/comments', isLoggedIn, function (
           comment.save()
           post.comments.push(comment._id)
           post.save()
-          res.redirect('/post/' + post._id + '/user/' + req.params.userid + '/' + post.title)
+          res.redirect('/post/' + post._id + '/user/' + req.params.userid)
         }
       })
     }
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, function (req, res) {
+router.get('/post/:postid/user/:userid/comments/like', isLoggedIn, function (req, res) {
   var postid = req.params.postid
   var userid = req.params.userid
   var title = req.params.title
@@ -65,9 +65,9 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
 
             Post.findByIdAndUpdate(postid, {$inc: {like: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid )
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           } else if (!votingArray[i].didLike && !votingArray[i].didDislike) {
@@ -76,9 +76,9 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
 
             Post.findByIdAndUpdate(postid, {$inc: {like: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           } else if (!votingArray[i].didLike && votingArray[i].didDislike) {
@@ -87,14 +87,14 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
 
             Post.findByIdAndUpdate(postid, {$inc: {dislike: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
             Post.findByIdAndUpdate(postid, {$inc: {like: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           }
@@ -107,9 +107,9 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
 
         Post.findByIdAndUpdate(postid, {$inc: {like: 1}}, function (err, post) {
           if (err) {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postid + '/user/' + userid)
           } else {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postid + '/user/' + userid)
           }
         })
       }
@@ -117,7 +117,7 @@ router.get('/post/:postid/user/:userid/:title/comments/like', isLoggedIn, functi
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, function (req, res) {
+router.get('/post/:postid/user/:userid/comments/dislike', isLoggedIn, function (req, res) {
   var postid = req.params.postid
   var userid = req.params.userid
   var title = req.params.title
@@ -143,9 +143,9 @@ router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, fun
 
             Post.findByIdAndUpdate(postid, {$inc: {dislike: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           } else if (!votingArray[i].didLike && !votingArray[i].didDislike) {
@@ -154,9 +154,9 @@ router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, fun
 
             Post.findByIdAndUpdate(postid, {$inc: {dislike: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           } else if (!votingArray[i].didDislike && votingArray[i].didLike) {
@@ -165,14 +165,14 @@ router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, fun
 
             Post.findByIdAndUpdate(postid, {$inc: {like: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
             Post.findByIdAndUpdate(postid, {$inc: {dislike: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           }
@@ -185,9 +185,9 @@ router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, fun
 
         Post.findByIdAndUpdate(postid, {$inc: {dislike: 1}}, function (err, post) {
           if (err) {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postid + '/user/' + userid)
           } else {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postid + '/user/' + userid)
           }
         })
       }
@@ -195,7 +195,7 @@ router.get('/post/:postid/user/:userid/:title/comments/dislike', isLoggedIn, fun
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLoggedIn, function (req, res) {
+router.get('/post/:postid/user/:userid/comments/:commentid/like', isLoggedIn, function (req, res) {
   var postid = req.params.postid
   var userid = req.params.userid
   var commentid = req.params.commentid
@@ -222,9 +222,9 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLogge
 
             Comment.findByIdAndUpdate(commentid, {$inc: {like: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           } else if (!votingArray[i].didLike && !votingArray[i].didDislike) {
@@ -233,9 +233,9 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLogge
 
             Comment.findByIdAndUpdate(commentid, {$inc: {like: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           } else if (!votingArray[i].didLike && votingArray[i].didDislike) {
@@ -244,14 +244,14 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLogge
 
             Comment.findByIdAndUpdate(commentid, {$inc: {dislike: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
             Comment.findByIdAndUpdate(commentid, {$inc: {like: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           }
@@ -264,9 +264,9 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLogge
 
         Comment.findByIdAndUpdate(commentid, {$inc: {like: 1}}, function (err, post) {
           if (err) {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postid + '/user/' + userid)
           } else {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postid + '/user/' + userid)
           }
         })
       }
@@ -274,7 +274,7 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/like', isLogge
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLoggedIn, function (req, res) {
+router.get('/post/:postid/user/:userid/comments/:commentid/dislike', isLoggedIn, function (req, res) {
   var postid = req.params.postid
   var userid = req.params.userid
   var commentid = req.params.commentid
@@ -301,9 +301,9 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLo
 
             Comment.findByIdAndUpdate(commentid, {$inc: {dislike: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           } else if (!votingArray[i].didLike && !votingArray[i].didDislike) {
@@ -312,9 +312,9 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLo
 
             Comment.findByIdAndUpdate(commentid, {$inc: {dislike: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           } else if (!votingArray[i].didDislike && votingArray[i].didLike) {
@@ -323,14 +323,14 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLo
 
             Comment.findByIdAndUpdate(commentid, {$inc: {like: -1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
             Comment.findByIdAndUpdate(commentid, {$inc: {dislike: 1}}, function (err, post) {
               if (err) {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               } else {
-                res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+                res.redirect('/post/' + postid + '/user/' + userid)
               }
             })
           }
@@ -343,9 +343,9 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLo
 
         Comment.findByIdAndUpdate(commentid, {$inc: {dislike: 1}}, function (err, post) {
           if (err) {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postid + '/user/' + userid)
           } else {
-            res.redirect('/post/' + postid + '/user/' + userid + '/' + title)
+            res.redirect('/post/' + postid + '/user/' + userid)
           }
         })
       }
@@ -353,7 +353,7 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/dislike', isLo
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/:commentid/bestanswer', isLoggedIn, function (req, res) {
+router.get('/post/:postid/user/:userid/comments/:commentid/bestanswer', isLoggedIn, function (req, res) {
   Post.findById(req.params.postid, function (err, post) {
     if (err) {
       console.log(err)
@@ -379,14 +379,14 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/bestanswer', i
           comment.helpful = true
           comment.save()
           post.save()
-          res.redirect('/post/' + post._id + '/user/' + req.params.userid + '/' + post.title)
+          res.redirect('/post/' + post._id + '/user/' + req.params.userid)
         }
       })
     }
   })
 })
 
-router.get('/post/:postid/user/:userid/:title/comments/:commentid/nothelpful', isLoggedIn, function (req, res) {
+router.get('/post/:postid/user/:userid/comments/:commentid/nothelpful', isLoggedIn, function (req, res) {
   Post.findById(req.params.postid, function (err, post) {
     if (err) {
       console.log(err)
@@ -409,26 +409,26 @@ router.get('/post/:postid/user/:userid/:title/comments/:commentid/nothelpful', i
         }
       })
 
-      res.redirect('/post/' + post._id + '/user/' + req.params.userid + '/' + post.title)
+      res.redirect('/post/' + post._id + '/user/' + req.params.userid)
     }
   })
 })
 
 // UPDATE ROUTE
-router.put('/post/:postid/user/:userid/:title/comments/:commentid/', checkCommentOwnership, function (req, res) {
+router.put('/post/:postid/user/:userid/comments/:commentid/', checkCommentOwnership, function (req, res) {
   Comment.findByIdAndUpdate(req.params.commentid, {text: req.body.comment}, function (err, updatedComment) {
     if (err) {
       console.log(err)
       res.redirect('/')
     } else {
       updatedComment.save()
-      res.redirect('/post/' + req.params.postid + '/user/' + req.params.userid + '/' + req.params.title)
+      res.redirect('/post/' + req.params.postid + '/user/' + req.params.userid)
     }
   })
 })
 
 // DELETE ROUTE
-router.delete('/post/:postid/user/:userid/:title/comments/:commentid/', checkCommentOwnership, function (req, res) {
+router.delete('/post/:postid/user/:userid/comments/:commentid/', checkCommentOwnership, function (req, res) {
   Comment.findByIdAndRemove(req.params.commentid, function (err) {
     if (err) {
       console.log(err)
@@ -448,7 +448,7 @@ router.delete('/post/:postid/user/:userid/:title/comments/:commentid/', checkCom
         console.log(foundPost.comments)
       })
 
-      res.redirect('/post/' + req.params.postid + '/user/' + req.params.userid + '/' + req.params.title)
+      res.redirect('/post/' + req.params.postid + '/user/' + req.params.userid)
     }
   })
 })

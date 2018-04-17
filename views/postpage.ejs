@@ -19,11 +19,11 @@
                     
                 <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
                   <!-- for delete  -->
-                  <form id="delete-form" action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/?_method=DELETE" method="POST">
+                  <form id="delete-form" action="/post/<%= post._id %>/user/<%= post.author.id %>/?_method=DELETE" method="POST">
                     <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                   </form>
                   <!-- for edit  -->
-                  <a class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" href="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/edit">Edit</a>
+                  <a class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" href="/post/<%= post._id %>/user/<%= post.author.id %>/edit">Edit</a>
                 
                 <% } %>
                               
@@ -60,7 +60,7 @@
               <div class="ui labeled button" tabindex="0">
                  <!-- show only if user owns the post -->
               <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
-                <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui info button" >
+                <a href="/post/<%= post._id %>/user/<%=  user._id  %>/comments/<%= comment._id %>/bestanswer" class="ui info button" >
                   Drop Best Answer
                 </a>
               <% } %>
@@ -92,21 +92,21 @@
                       
                       <!-- show only if user owns the post -->
                       <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
-                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
+                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
                           Best Answer
                         </a>
-                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful" class="ui info button">not helpful</a>
+                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/comments/<%= comment._id %>/nothelpful" class="ui info button">not helpful</a>
                       <% } %>
                       
 
                       <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
-                        <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                        <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                           <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                         </form>
                         
                         <button onclick="hideAndSeek('<%= comment._id %>')"class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" id="editButtonComment">Edit</button>
                         <div id="<%= comment._id %>" style="display:none;">
-                          <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+                          <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                             <div>
                               <label style = "font-size: 10px;">Edit Comment</label>
                               <textarea class="form-control input-md" rows="4" name="comment"><%= comment.text %></textarea>
@@ -133,21 +133,21 @@
 
                       <!-- show only if user owns the post -->
                       <% if (currentUser && post.author.id.equals(currentUser._id)){ %>
-                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
+                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/comments/<%= comment._id %>/bestanswer" class="ui green button">
                           Best Answer
                         </a>
                      
-                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/<%= post.title %>/comments/<%= comment._id %>/nothelpful" class="ui info button">not helpful</a>
+                        <a href="/post/<%= post._id %>/user/<%=  user._id  %>/comments/<%= comment._id %>/nothelpful" class="ui info button">not helpful</a>
                         <% } %>
                       
                       <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
-                      <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                      <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                         <button class="btn btn-xs btn-danger" style="float:right;">Delete</button>
                       </form>
 
                       <button onclick="hideAndSeek('<%= comment._id %>')"class="btn btn-xs btn-warning" style="float:right; margin-right:2px;" id="editButtonComment">Edit</button>
                         <div id="<%= comment._id %>" style="display:none;">
-                          <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/<%= post.title %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+                          <form action="/post/<%= post._id %>/user/<%=  post.author.id  %>/comments/<%= comment._id %>?_method=PUT" method="POST">
                             <div>
                               <label style = "font-size: 10px;">Edit Comment</label>
                               <textarea class="form-control input-md" rows="4" name="comment"><%= comment.text %></textarea>
@@ -168,7 +168,7 @@
             <!-- Add new comment section -->
 
             <label for="addComment">Add New Comment to: <h4 class="wraptxt"><%= post.title%></h4></label>
-            <form action="/post/<%= post._id %>/user/<%= post.author.id %>/<%= post.title %>/comments" method="POST">
+            <form action="/post/<%= post._id %>/user/<%= post.author.id %>/comments" method="POST">
               <% if(user !== null){ %>  
               <div class="form-group">
                 <textarea class="form-control" rows="4" name="comment[text]" placeholder="Type Here" required='' oninvalid="this.setCustomValidity('Please enter your comment!')"
